@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finca Bosco — Immersive Experience 2026</title>
+    <title>Finca Bosco — Immersive Architecture & Concierge 2026</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Cormorant Garamond (Luxury Editorial) & Plus Jakarta Sans -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -65,7 +65,7 @@
             transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
         }
 
-        /* Zoom / Walk-through transition classes */
+        /* Walk-through 3D Camera Transitions */
         .walking-forward {
             transform: scale3d(1.38, 1.38, 1.38) translateZ(180px) !important;
             filter: blur(8px) brightness(0.4) !important;
@@ -77,12 +77,17 @@
             transition: none !important;
         }
 
-        /* Glassmorphism Panels */
+        /* Ambient Lighting Filters (State of the Art Mood Switcher) */
+        .mood-day { filter: brightness(0.92) contrast(1.03) saturate(1.05); }
+        .mood-sunset { filter: brightness(0.86) contrast(1.08) sepia(0.22) hue-rotate(-8deg) saturate(1.3); }
+        .mood-night { filter: brightness(0.62) contrast(1.18) saturate(0.85) hue-rotate(12deg); }
+
+        /* Luxury Glassmorphism */
         .luxury-glass {
-            background: rgba(15, 14, 13, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(14, 13, 12, 0.68);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
         }
 
         .luxury-glass-light {
@@ -92,7 +97,7 @@
             border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
-        /* 3D Floating Hotspots */
+        /* 3D Spatial Hotspots */
         .hotspot {
             position: absolute;
             transform: translate(-50%, -50%);
@@ -110,64 +115,118 @@
             position: absolute;
             inset: -8px;
             border-radius: 9999px;
-            border: 1px solid rgba(230, 200, 117, 0.6);
+            border: 1px solid rgba(230, 200, 117, 0.65);
             animation: pulse-ring 2.4s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
         }
 
         @keyframes pulse-ring {
-            0% { transform: scale(0.8); opacity: 0.9; }
+            0% { transform: scale(0.82); opacity: 0.9; }
             80%, 100% { transform: scale(1.75); opacity: 0; }
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
-        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
-        ::-webkit-scrollbar-thumb { background: rgba(230, 200, 117, 0.4); border-radius: 9999px; }
+        /* Custom Designer Cursor Follower (Desktop) */
+        #cursor-ring {
+            position: fixed;
+            width: 34px;
+            height: 34px;
+            border: 1px solid rgba(230, 200, 117, 0.55);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.25s ease, height 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+            mix-blend-mode: screen;
+        }
+        #cursor-ring.cursor-hover {
+            width: 54px;
+            height: 54px;
+            background-color: rgba(230, 200, 117, 0.15);
+            border-color: rgba(230, 200, 117, 0.95);
+        }
+
+        /* Smooth Hide/Minimize Transitions */
+        .collapsible-panel {
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cinema-hidden {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transform: translateY(20px) scale(0.96) !important;
+        }
 
         /* Blueprint Active Node */
-        .map-node {
-            transition: all 0.3s ease;
-        }
+        .map-node { transition: all 0.3s ease; }
         .map-node.active {
             background-color: #e6c875;
             color: #0c0a09;
             box-shadow: 0 0 15px rgba(230, 200, 117, 0.8);
             font-weight: 700;
         }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        ::-webkit-scrollbar-thumb { background: rgba(230, 200, 117, 0.4); border-radius: 9999px; }
     </style>
 </head>
 <body>
 
-    <!-- TOP NAVIGATION BAR (Floating Editorial Header) -->
-    <header class="fixed top-0 left-0 right-0 z-40 px-6 py-4 flex items-center justify-between pointer-events-none">
-        <!-- Brand / Location Title -->
-        <div class="pointer-events-auto flex items-center gap-4 luxury-glass px-5 py-2.5 rounded-full shadow-2xl">
+    <!-- Custom Designer Cursor Ring -->
+    <div id="cursor-ring" class="hidden md:block"></div>
+
+    <!-- TOP BAR (Floating Editorial Header) -->
+    <header class="fixed top-0 left-0 right-0 z-40 px-4 sm:px-6 py-4 flex items-center justify-between pointer-events-none">
+        <!-- Brand / Title -->
+        <div class="pointer-events-auto flex items-center gap-3.5 luxury-glass px-4 sm:px-5 py-2.5 rounded-full shadow-2xl">
             <div class="w-2.5 h-2.5 rounded-full bg-gold-300 animate-pulse"></div>
             <div>
-                <h1 class="font-serif text-lg sm:text-xl tracking-wider uppercase font-semibold text-white leading-none">Finca Bosco</h1>
-                <p class="text-[10px] tracking-[0.2em] uppercase text-stone-400 mt-0.5">Sant Llorenç • 31.10. – 07.11.2026</p>
+                <h1 class="font-serif text-base sm:text-xl tracking-wider uppercase font-semibold text-white leading-none">Finca Bosco</h1>
+                <p class="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase text-stone-400 mt-0.5">Mallorca • 31.10. – 07.11.2026</p>
             </div>
         </div>
 
-        <!-- Level / Floor Quick Switcher (Center) -->
-        <div class="hidden lg:flex pointer-events-auto luxury-glass p-1.5 rounded-full gap-1 shadow-2xl">
-            <button onclick="filterFloor('ALL')" id="btn-floor-ALL" class="floor-btn px-4 py-1.5 rounded-full text-xs tracking-widest uppercase transition bg-gold-300 text-stone-950 font-semibold">Alle Bereiche</button>
-            <button onclick="goToNode('veranda')" id="btn-floor-OUT" class="floor-btn px-4 py-1.5 rounded-full text-xs tracking-widest uppercase transition text-stone-300 hover:text-white">Außen & Pool</button>
-            <button onclick="goToNode('foyer')" id="btn-floor-EG" class="floor-btn px-4 py-1.5 rounded-full text-xs tracking-widest uppercase transition text-stone-300 hover:text-white">Haupthaus EG</button>
-            <button onclick="goToNode('room1')" id="btn-floor-OG" class="floor-btn px-4 py-1.5 rounded-full text-xs tracking-widest uppercase transition text-stone-300 hover:text-white">Haupthaus OG</button>
-            <button onclick="goToNode('guesthouse')" id="btn-floor-GH" class="floor-btn px-4 py-1.5 rounded-full text-xs tracking-widest uppercase transition text-stone-300 hover:text-white">Gästehaus</button>
+        <!-- Center Quick Floor Switcher (Collapsible in Cinema Mode) -->
+        <div id="top-floor-bar" class="hidden xl:flex pointer-events-auto luxury-glass p-1.5 rounded-full gap-1 shadow-2xl collapsible-panel">
+            <button onclick="openFullFloorplanModal()" class="floor-btn px-3.5 py-1.5 rounded-full text-[11px] tracking-widest uppercase transition text-gold-300 hover:bg-white/10 font-semibold">
+                <i class="fa-solid fa-layer-group mr-1"></i> Alle 5 Zimmer
+            </button>
+            <button onclick="goToNode('veranda')" id="btn-floor-OUT" class="floor-btn px-3.5 py-1.5 rounded-full text-[11px] tracking-widest uppercase transition bg-gold-300 text-stone-950 font-semibold">Außen & Pool</button>
+            <button onclick="goToNode('foyer')" id="btn-floor-EG" class="floor-btn px-3.5 py-1.5 rounded-full text-[11px] tracking-widest uppercase transition text-stone-300 hover:text-white">Haupthaus EG</button>
+            <button onclick="goToNode('room1')" id="btn-floor-OG" class="floor-btn px-3.5 py-1.5 rounded-full text-[11px] tracking-widest uppercase transition text-stone-300 hover:text-white">Haupthaus OG</button>
+            <button onclick="goToNode('guesthouse')" id="btn-floor-GH" class="floor-btn px-3.5 py-1.5 rounded-full text-[11px] tracking-widest uppercase transition text-stone-300 hover:text-white">Gästehaus</button>
         </div>
 
-        <!-- Right Tools: Live Weather + Concierge Hub -->
-        <div class="pointer-events-auto flex items-center gap-3">
-            <div class="hidden sm:flex items-center gap-2.5 luxury-glass px-4 py-2.5 rounded-full text-xs">
-                <i class="fa-solid fa-sun text-gold-300"></i>
-                <span id="weather-display" class="tracking-wide text-stone-200 font-medium">22°C Sant Llorenç</span>
+        <!-- Right Controls: Mood Switcher, Cinema Fullscreen Toggle, Weather & Concierge Hub -->
+        <div class="pointer-events-auto flex items-center gap-2 sm:gap-2.5">
+            <!-- Ambient Mood Switcher (State of the Art Lighting Filter) -->
+            <div class="hidden md:flex items-center luxury-glass p-1 rounded-full text-xs">
+                <button onclick="setMood('day')" id="mood-btn-day" class="px-2.5 py-1.5 rounded-full bg-gold-300 text-stone-950 font-bold transition" title="Tageslicht">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
+                <button onclick="setMood('sunset')" id="mood-btn-sunset" class="px-2.5 py-1.5 rounded-full text-stone-300 hover:text-white transition" title="Golden Hour / Sunset">
+                    <i class="fa-solid fa-cloud-sun"></i>
+                </button>
+                <button onclick="setMood('night')" id="mood-btn-night" class="px-2.5 py-1.5 rounded-full text-stone-300 hover:text-white transition" title="Abendstimmung">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
             </div>
 
-            <button onclick="toggleDrawer('concierge-drawer')" class="luxury-glass hover:border-gold-300/60 px-5 py-2.5 rounded-full flex items-center gap-2.5 text-xs uppercase tracking-widest font-semibold text-gold-300 transition shadow-2xl">
-                <i class="fa-solid fa-bell-concierge"></i>
-                <span>Planer & Essen</span>
+            <!-- Cinema View Toggle (Hides all Overlays for 100% Unobstructed Image View) -->
+            <button onclick="toggleCinemaMode()" id="cinema-toggle-btn" class="luxury-glass hover:border-gold-300/60 px-3.5 py-2.5 rounded-full flex items-center gap-2 text-xs text-stone-200 transition shadow-2xl" title="Overlays ausblenden für Vollbild-Ansicht (Taste H)">
+                <i class="fa-solid fa-expand text-gold-300" id="cinema-icon"></i>
+                <span class="hidden sm:inline text-[11px] uppercase tracking-wider font-semibold" id="cinema-label">Vollbild</span>
+            </button>
+
+            <!-- Live Weather Pill -->
+            <div class="hidden lg:flex items-center gap-2 luxury-glass px-3.5 py-2.5 rounded-full text-xs">
+                <i class="fa-solid fa-temperature-half text-gold-300"></i>
+                <span id="weather-display" class="tracking-wide text-stone-200 font-medium">22°C</span>
+            </div>
+
+            <!-- Main Concierge & Menu Button -->
+            <button onclick="toggleDrawer('concierge-drawer')" class="luxury-glass hover:border-gold-300 px-4 sm:px-5 py-2.5 rounded-full flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-gold-300 transition shadow-2xl">
+                <i class="fa-solid fa-compass"></i>
+                <span>Menü & Infos</span>
             </button>
         </div>
     </header>
@@ -176,83 +235,126 @@
     <div id="viewport">
         <!-- Parallax 3D Scene Canvas -->
         <div id="scene-canvas">
-            <!-- Background Room Photo -->
             <img id="scene-bg" src="3df79b76-4042-43b1-9bc5-e2d16b8bf527.jpeg" 
                  onerror="this.src='https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80'" 
-                 class="w-full h-full object-cover object-center brightness-[0.82] transition-all duration-700" alt="Aktueller Raum">
+                 class="w-full h-full object-cover object-center mood-day transition-all duration-700" alt="Aktueller Raum">
             
-            <!-- Subtle Cinematic Vignette -->
-            <div class="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/20 to-stone-950/60 pointer-events-none"></div>
+            <!-- Subtle Vignette -->
+            <div class="absolute inset-0 bg-gradient-to-t from-stone-950/75 via-transparent to-stone-950/45 pointer-events-none"></div>
 
-            <!-- Dynamic 3D Hotspots Container -->
-            <div id="hotspots-layer" class="absolute inset-0"></div>
+            <!-- Dynamic 3D Hotspots Layer -->
+            <div id="hotspots-layer" class="absolute inset-0 collapsible-panel"></div>
         </div>
 
-        <!-- CURRENT LOCATION HUD & GALLERY STRIP (Bottom Right / Center) -->
-        <div class="fixed bottom-6 right-6 left-6 lg:left-[380px] z-30 pointer-events-none flex flex-col md:flex-row items-end justify-between gap-4">
-            
-            <!-- Room Info Box -->
-            <div class="pointer-events-auto luxury-glass p-6 rounded-3xl max-w-xl w-full shadow-2xl border-l-2 border-l-gold-300">
-                <div class="flex items-center justify-between gap-2 mb-1">
-                    <span id="hud-zone" class="text-[10px] tracking-[0.25em] uppercase text-gold-300 font-semibold">AUSSENBEREICH • EINGANG</span>
-                    <span id="hud-StepCounter" class="text-[11px] text-stone-400 font-mono">Station 1 / 12</span>
+        <!-- ================================================================== -->
+        <!-- MINIMIZABLE OVERLAY 1: ARCHITECTURAL RADAR (Bottom Left)           -->
+        <!-- ================================================================== -->
+        <div id="radar-wrapper" class="fixed bottom-5 left-5 z-30 collapsible-panel">
+            <!-- Expanded Radar Card -->
+            <div id="radar-expanded" class="w-72 sm:w-80 luxury-glass rounded-3xl p-4 shadow-2xl border border-white/15">
+                <div class="flex items-center justify-between mb-2.5">
+                    <div>
+                        <span class="text-[9px] uppercase tracking-[0.2em] text-gold-300 block font-semibold">Architektur-Radar</span>
+                        <h3 class="font-serif text-lg text-white leading-tight">Grundriss & Etagen</h3>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="openFullFloorplanModal()" class="text-[11px] bg-white/10 hover:bg-white/20 text-gold-300 px-2.5 py-1 rounded-lg transition" title="Alle 5 Schlafzimmer">
+                            5 Zimmer
+                        </button>
+                        <button onclick="toggleRadarMinimize(true)" class="w-7 h-7 rounded-full luxury-glass-light hover:bg-white/20 flex items-center justify-center text-stone-300 hover:text-white text-xs transition" title="Grundriss minimieren">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                    </div>
                 </div>
-                <h2 id="hud-title" class="font-serif text-2xl sm:text-4xl text-white font-semibold tracking-wide">Veranda & Anfahrt</h2>
-                <p id="hud-desc" class="text-xs sm:text-sm text-stone-300 mt-2 leading-relaxed">
-                    Willkommen auf der Finca Bosco. Du stehst vor der imposanten Naturstein-Fassade mit überdachter Veranda. Klicke auf die schwebenden Punkte im Bild, um das Haus zu betreten oder zum Pool zu gehen.
+
+                <!-- Floor Tabs -->
+                <div class="grid grid-cols-4 gap-1 bg-stone-950/70 p-1 rounded-xl text-[10px] uppercase tracking-wider text-center mb-2.5">
+                    <button onclick="switchRadarTab('OUT')" id="rtab-OUT" class="py-1 rounded-lg bg-gold-300 text-stone-950 font-bold">Außen</button>
+                    <button onclick="switchRadarTab('EG')" id="rtab-EG" class="py-1 rounded-lg text-stone-400 hover:text-white">EG</button>
+                    <button onclick="switchRadarTab('OG')" id="rtab-OG" class="py-1 rounded-lg text-stone-400 hover:text-white">OG</button>
+                    <button onclick="switchRadarTab('GH')" id="rtab-GH" class="py-1 rounded-lg text-stone-400 hover:text-white">Gäste</button>
+                </div>
+
+                <!-- Schematic Interactive Map -->
+                <div id="radar-map-container" class="relative h-40 bg-stone-950/80 rounded-2xl border border-white/10 p-2.5 overflow-hidden"></div>
+                <div class="flex items-center justify-between text-[10px] text-stone-400 mt-2 px-1">
+                    <span>Raum anklicken zum Springen</span>
+                    <span class="text-gold-300"><i class="fa-solid fa-location-crosshairs mr-1"></i>Live</span>
+                </div>
+            </div>
+
+            <!-- Minimized Radar Pill (Shown when radar is collapsed) -->
+            <button id="radar-minimized" onclick="toggleRadarMinimize(false)" class="hidden luxury-glass hover:border-gold-300 px-4 py-3 rounded-full shadow-2xl flex items-center gap-3 text-xs text-white transition">
+                <span class="w-2.5 h-2.5 rounded-full bg-gold-300 animate-ping"></span>
+                <i class="fa-solid fa-map-location-dot text-gold-300"></i>
+                <span class="uppercase tracking-widest text-[11px] font-semibold">Radar öffnen</span>
+                <i class="fa-solid fa-plus text-stone-400 ml-1"></i>
+            </button>
+        </div>
+
+        <!-- ================================================================== -->
+        <!-- MINIMIZABLE OVERLAY 2: ROOM INFO HUD & GALLERY (Bottom Right)      -->
+        <!-- ================================================================== -->
+        <div id="hud-wrapper" class="fixed bottom-5 right-5 z-30 flex flex-col items-end gap-3 max-w-[92vw] sm:max-w-xl collapsible-panel">
+            
+            <!-- Multi-Angle Photo Strip (Always quick-accessible above HUD) -->
+            <div class="luxury-glass p-2 rounded-2xl flex items-center gap-2 overflow-x-auto max-w-full shadow-2xl">
+                <span class="text-[9px] uppercase tracking-widest text-stone-400 px-2 hidden sm:inline">Blickwinkel:</span>
+                <div id="angle-thumbnails" class="flex items-center gap-2"></div>
+            </div>
+
+            <!-- Expanded Room Info Card -->
+            <div id="hud-expanded" class="luxury-glass p-5 sm:p-6 rounded-3xl w-full shadow-2xl border-l-2 border-l-gold-300 relative">
+                <!-- Minimize Button Top Right of HUD -->
+                <button onclick="toggleHudMinimize(true)" class="absolute top-4 right-4 w-8 h-8 rounded-full luxury-glass-light hover:bg-white/20 flex items-center justify-center text-stone-300 hover:text-white text-xs transition" title="Info-Box minimieren für freie Sicht">
+                    <i class="fa-solid fa-minus"></i>
+                </button>
+
+                <div class="flex items-center gap-3 mb-1 pr-10">
+                    <span id="hud-zone" class="text-[10px] tracking-[0.25em] uppercase text-gold-300 font-semibold">AUSSENBEREICH • EINGANG</span>
+                    <span class="text-stone-600">•</span>
+                    <span id="hud-StepCounter" class="text-[11px] text-stone-400 font-mono">Station 1 / 13</span>
+                </div>
+
+                <h2 id="hud-title" class="font-serif text-2xl sm:text-3xl text-white font-semibold tracking-wide pr-8">Veranda & Anfahrt</h2>
+                <p id="hud-desc" class="text-xs sm:text-sm text-stone-300 mt-1.5 leading-relaxed">
+                    Willkommen auf der Finca Bosco. Klicke auf die Punkte im Raum oder nutze die Pfeiltasten, um durch das Anwesen zu schreiten.
                 </p>
 
-                <!-- Action Buttons inside HUD (Check-in if Bedroom, or Quick Tour Next) -->
-                <div class="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
-                    <div id="hud-room-action">
-                        <!-- Dynamically shows Bed Check-in button if current node is a bedroom -->
-                    </div>
+                <!-- Action Bar inside HUD -->
+                <div class="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2">
+                    <div id="hud-room-action"></div>
                     <div class="flex items-center gap-2 ml-auto">
-                        <button onclick="stepTour(-1)" class="luxury-glass-light hover:bg-white/20 px-3.5 py-2 rounded-xl text-xs uppercase tracking-wider transition" title="Vorheriger Raum">
-                            <i class="fa-solid fa-arrow-left mr-1"></i> Zurück
+                        <button onclick="stepTour(-1)" class="luxury-glass-light hover:bg-white/20 px-3 py-2 rounded-xl text-xs uppercase tracking-wider transition" title="Vorherige Station (Pfeiltaste Links)">
+                            <i class="fa-solid fa-arrow-left"></i>
                         </button>
-                        <button onclick="stepTour(1)" class="bg-gold-300 hover:bg-gold-400 text-stone-950 font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition">
-                            Weitergehen <i class="fa-solid fa-arrow-right ml-1"></i>
+                        <button onclick="stepTour(1)" class="bg-gold-300 hover:bg-gold-400 text-stone-950 font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition" title="Nächste Station (Pfeiltaste Rechts)">
+                            Weiter <i class="fa-solid fa-arrow-right ml-1"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Multi-Angle Photo Switcher for Current Space -->
-            <div class="pointer-events-auto luxury-glass p-3 rounded-2xl flex items-center gap-2.5 overflow-x-auto max-w-full md:max-w-xs shadow-2xl" id="angle-thumbnails">
-                <!-- Populated by JS with all images of the current station -->
-            </div>
-        </div>
-
-        <!-- INTERACTIVE ARCHITECTURAL RADAR / FLOORPLAN (Bottom Left) -->
-        <div class="fixed bottom-6 left-6 z-30 w-80 luxury-glass rounded-3xl p-4 shadow-2xl hidden lg:block">
-            <div class="flex items-center justify-between mb-3">
-                <div>
-                    <span class="text-[10px] uppercase tracking-[0.2em] text-gold-300 block font-semibold">Architektur-Radar</span>
-                    <h3 class="font-serif text-lg text-white leading-tight">Wo befinde ich mich?</h3>
+            <!-- Minimized HUD Bar (Compact Pill when Info Box is minimized) -->
+            <div id="hud-minimized" class="hidden luxury-glass px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-3 border border-gold-300/40">
+                <button onclick="stepTour(-1)" class="w-7 h-7 rounded-full luxury-glass-light hover:bg-white/20 flex items-center justify-center text-xs text-white">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div onclick="toggleHudMinimize(false)" class="cursor-pointer px-2 text-center">
+                    <span id="hud-min-title" class="text-xs font-serif font-semibold text-white tracking-wide block">Veranda & Anfahrt</span>
+                    <span class="text-[9px] uppercase tracking-widest text-gold-300 block">Info einblenden (+)</span>
                 </div>
-                <button onclick="openFullFloorplanModal()" class="text-xs text-stone-300 hover:text-gold-300 underline">
-                    Belegungsplan
+                <button onclick="stepTour(1)" class="w-7 h-7 rounded-full bg-gold-300 text-stone-950 flex items-center justify-center text-xs font-bold">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button onclick="toggleHudMinimize(false)" class="w-7 h-7 rounded-full luxury-glass-light hover:bg-white/20 flex items-center justify-center text-xs text-gold-300" title="Info-Box maximieren">
+                    <i class="fa-solid fa-expand"></i>
                 </button>
             </div>
-
-            <!-- Floor Tabs inside Minimap -->
-            <div class="grid grid-cols-4 gap-1 bg-stone-950/60 p-1 rounded-xl text-[10px] uppercase tracking-wider text-center mb-3">
-                <button onclick="switchRadarTab('OUT')" id="rtab-OUT" class="py-1 rounded-lg bg-gold-300 text-stone-950 font-bold">Außen</button>
-                <button onclick="switchRadarTab('EG')" id="rtab-EG" class="py-1 rounded-lg text-stone-400 hover:text-white">EG</button>
-                <button onclick="switchRadarTab('OG')" id="rtab-OG" class="py-1 rounded-lg text-stone-400 hover:text-white">OG</button>
-                <button onclick="switchRadarTab('GH')" id="rtab-GH" class="py-1 rounded-lg text-stone-400 hover:text-white">Gäste</button>
-            </div>
-
-            <!-- Schematic Interactive Blueprint Map -->
-            <div id="radar-map-container" class="relative h-44 bg-stone-950/80 rounded-2xl border border-white/10 p-3 overflow-hidden">
-                <!-- Dynamically rendered floor schematic -->
-            </div>
-            <p class="text-[11px] text-stone-400 mt-2 text-center">Klicke auf einen Raum im Grundriss, um direkt dorthin zu springen.</p>
         </div>
     </div>
 
-    <!-- BEDROOM CHECK-IN & DETAILS MODAL (Opens when inspecting one of the 5 bedrooms) -->
+    <!-- BEDROOM CHECK-IN MODAL -->
     <div id="bedroom-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
         <div class="luxury-glass rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-gold-300/30 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeBedroomModal()" class="absolute top-5 right-5 w-10 h-10 rounded-full luxury-glass-light flex items-center justify-center text-white hover:bg-white/20">
@@ -262,13 +364,13 @@
         </div>
     </div>
 
-    <!-- FULL OVERVIEW & BED OCCUPANCY MODAL -->
+    <!-- ALL 5 BEDROOMS OVERVIEW MODAL -->
     <div id="overview-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
         <div class="luxury-glass rounded-3xl max-w-5xl w-full p-6 sm:p-8 border border-white/15 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
                 <div>
                     <span class="text-xs uppercase tracking-[0.2em] text-gold-300">Komplette Raumübersicht</span>
-                    <h3 class="font-serif text-3xl text-white">Alle 5 Schlafzimmer & Betten-Check-in</h3>
+                    <h3 class="font-serif text-3xl text-white">Alle 5 Schlafzimmer & Betten-Belegung</h3>
                 </div>
                 <button onclick="closeFullFloorplanModal()" class="w-10 h-10 rounded-full luxury-glass-light flex items-center justify-center text-white hover:bg-white/20">
                     <i class="fa-solid fa-xmark"></i>
@@ -278,88 +380,285 @@
         </div>
     </div>
 
-    <!-- SLIDE-OVER CONCIERGE DRAWER (Wochenplan, Speiseplan, Einkaufsliste) -->
-    <aside id="concierge-drawer" class="fixed top-0 right-0 bottom-0 w-full max-w-xl z-50 luxury-glass border-l border-white/15 translate-x-full transition-transform duration-500 flex flex-col">
+    <!-- ====================================================================== -->
+    <!-- SLIDE-OVER CONCIERGE DRAWER (6 Tabs inkl. Karte & Kontakt Marco Metz)  -->
+    <!-- ====================================================================== -->
+    <aside id="concierge-drawer" class="fixed top-0 right-0 bottom-0 w-full max-w-2xl z-50 luxury-glass border-l border-white/15 translate-x-full transition-transform duration-500 flex flex-col shadow-2xl">
         <!-- Drawer Header -->
-        <div class="p-6 border-b border-white/10 flex items-center justify-between">
+        <div class="p-5 sm:p-6 border-b border-white/10 flex items-center justify-between">
             <div>
-                <span class="text-[10px] uppercase tracking-[0.25em] text-gold-300 font-semibold">Finca Concierge</span>
-                <h3 class="font-serif text-2xl text-white">Urlaubsplaner & Kulinarik</h3>
+                <span class="text-[10px] uppercase tracking-[0.25em] text-gold-300 font-semibold">Finca Bosco Concierge</span>
+                <h3 class="font-serif text-2xl sm:text-3xl text-white">Gruppen-Hub & Umgebung</h3>
             </div>
             <button onclick="toggleDrawer('concierge-drawer')" class="w-10 h-10 rounded-full luxury-glass-light flex items-center justify-center text-stone-300 hover:text-white">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
 
-        <!-- Drawer Tabs -->
-        <div class="grid grid-cols-4 gap-1 p-3 bg-stone-950/60 border-b border-white/10 text-xs font-semibold">
-            <button onclick="switchConciergeTab('tab-beds')" id="ctab-beds" class="py-2 rounded-xl bg-gold-300 text-stone-950">Betten (5)</button>
-            <button onclick="switchConciergeTab('tab-schedule')" id="ctab-schedule" class="py-2 rounded-xl text-stone-300 hover:bg-white/5">8-Tage-Plan</button>
-            <button onclick="switchConciergeTab('tab-food')" id="ctab-food" class="py-2 rounded-xl text-stone-300 hover:bg-white/5">Speiseplan</button>
-            <button onclick="switchConciergeTab('tab-shopping')" id="ctab-shopping" class="py-2 rounded-xl text-stone-300 hover:bg-white/5">Einkauf</button>
+        <!-- 6 Navigation Tabs inside Drawer -->
+        <div class="grid grid-cols-3 sm:grid-cols-6 gap-1 p-2.5 bg-stone-950/70 border-b border-white/10 text-[11px] font-semibold">
+            <button onclick="switchConciergeTab('tab-beds')" id="ctab-beds" class="py-2 px-1 rounded-xl bg-gold-300 text-stone-950 truncate">
+                <i class="fa-solid fa-bed mr-1"></i>Betten
+            </button>
+            <button onclick="switchConciergeTab('tab-schedule')" id="ctab-schedule" class="py-2 px-1 rounded-xl text-stone-300 hover:bg-white/5 truncate">
+                <i class="fa-regular fa-calendar mr-1"></i>Wochenplan
+            </button>
+            <button onclick="switchConciergeTab('tab-food')" id="ctab-food" class="py-2 px-1 rounded-xl text-stone-300 hover:bg-white/5 truncate">
+                <i class="fa-solid fa-utensils mr-1"></i>Essen
+            </button>
+            <button onclick="switchConciergeTab('tab-shopping')" id="ctab-shopping" class="py-2 px-1 rounded-xl text-stone-300 hover:bg-white/5 truncate">
+                <i class="fa-solid fa-cart-shopping mr-1"></i>Einkauf
+            </button>
+            <button onclick="switchConciergeTab('tab-map')" id="ctab-map" class="py-2 px-1 rounded-xl text-stone-300 hover:bg-white/5 truncate">
+                <i class="fa-solid fa-map-pin mr-1"></i>Karte
+            </button>
+            <button onclick="switchConciergeTab('tab-contact')" id="ctab-contact" class="py-2 px-1 rounded-xl text-stone-300 hover:bg-white/5 truncate">
+                <i class="fa-solid fa-address-card mr-1"></i>Kontakt
+            </button>
         </div>
 
-        <!-- Drawer Body Content -->
-        <div class="p-6 overflow-y-auto flex-grow space-y-6">
+        <!-- Drawer Content Body -->
+        <div class="p-5 sm:p-6 overflow-y-auto flex-grow space-y-6">
             
-            <!-- TAB 1: Quick Bed Check-In List -->
+            <!-- TAB 1: Betten-Check-in (5 Zimmer) -->
             <div id="tab-beds" class="concierge-section space-y-4">
-                <p class="text-xs text-stone-300">Trage deinen Namen direkt in dein Wunschzimmer ein oder klicke auf „In Raum springen“, um dir das Zimmer in 3D anzusehen.</p>
-                <div id="drawer-beds-list" class="space-y-4"></div>
+                <div class="flex items-center justify-between">
+                    <p class="text-xs text-stone-300">Trage deinen Namen in dein Wunschbett ein oder springe direkt in die 3D-Ansicht des Zimmers.</p>
+                </div>
+                <div id="drawer-beds-list" class="space-y-3"></div>
             </div>
 
-            <!-- TAB 2: 8-Day Weekly Calendar (31.10. - 07.11.2026) -->
+            <!-- TAB 2: 8-Tage-Wochenplan (31.10. - 07.11.2026) -->
             <div id="tab-schedule" class="concierge-section hidden space-y-3">
-                <p class="text-xs text-stone-300 mb-3">Klicke in ein Tagesfeld, um eigene Aktivitäten oder Notizen für die Gruppe zu ergänzen.</p>
-                <div id="schedule-container" class="space-y-3"></div>
+                <p class="text-xs text-stone-300 mb-2">Alle Einträge sind direkt editierbar und speichern sich automatisch.</p>
+                <div id="schedule-container" class="space-y-2.5"></div>
             </div>
 
-            <!-- TAB 3: Food & Wishes -->
+            <!-- TAB 3: Speiseplan & Essenswünsche -->
             <div id="tab-food" class="concierge-section hidden space-y-6">
                 <div>
-                    <h4 class="font-serif text-xl text-gold-300 mb-2">Geplante Mahlzeiten</h4>
+                    <h4 class="font-serif text-xl text-gold-300 mb-2">Geplanter Speiseplan</h4>
                     <div id="meal-plan-container" class="space-y-2 text-xs"></div>
                 </div>
-
                 <div class="pt-4 border-t border-white/10">
-                    <h4 class="font-serif text-xl text-gold-300 mb-3">Essenswunsch einreichen</h4>
+                    <h4 class="font-serif text-xl text-gold-300 mb-3">Wunschgericht oder Getränke-Wunsch</h4>
                     <form onsubmit="addFoodWish(event)" class="space-y-3">
                         <input type="text" id="wish-name" required placeholder="Dein Name" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/15 text-sm text-white focus:border-gold-300 focus:outline-none">
-                        <textarea id="wish-item" rows="2" required placeholder="Was möchtest du gerne essen/trinken? (z.B. Paella, Grillabend, Drinks...)" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/15 text-sm text-white focus:border-gold-300 focus:outline-none"></textarea>
+                        <textarea id="wish-item" rows="2" required placeholder="Dein Wunsch (z.B. Paella, Grillkäse, Aperol, Chili sin carne...)" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/15 text-sm text-white focus:border-gold-300 focus:outline-none"></textarea>
                         <button type="submit" class="w-full py-2.5 rounded-xl bg-gold-300 hover:bg-gold-400 text-stone-950 font-bold text-xs uppercase tracking-wider">Wunsch speichern</button>
                     </form>
                     <div id="wishes-list" class="mt-4 space-y-2"></div>
                 </div>
             </div>
 
-            <!-- TAB 4: Interactive Shopping List -->
+            <!-- TAB 4: Interaktive Einkaufsliste -->
             <div id="tab-shopping" class="concierge-section hidden space-y-4">
                 <form onsubmit="addShoppingItem(event)" class="flex gap-2">
-                    <input type="text" id="shop-item-input" required placeholder="Artikel hinzufügen (z.B. Kaffee, Eiswürfel...)" class="flex-grow px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/15 text-sm text-white focus:border-gold-300 focus:outline-none">
+                    <input type="text" id="shop-item-input" required placeholder="Neuer Artikel (z.B. Hafermilch, Grillkohle, Eiswürfel...)" class="flex-grow px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/15 text-sm text-white focus:border-gold-300 focus:outline-none">
                     <button type="submit" class="px-5 py-2.5 rounded-xl bg-gold-300 text-stone-950 font-bold text-xs uppercase">Plus</button>
                 </form>
                 <ul id="shopping-list-ul" class="divide-y divide-white/10 text-sm"></ul>
             </div>
 
+            <!-- TAB 5: Statische Karte & Supermärkte in der Nähe (Snapshot Oktober 2026) -->
+            <div id="tab-map" class="concierge-section hidden space-y-5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] uppercase tracking-widest text-gold-300 font-semibold">Momentaufnahme • Stand 16.10.2026</span>
+                        <h4 class="font-serif text-2xl text-white">Umgebungskarte & Supermärkte</h4>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Ma-4021+07540+Sant+Lloren%C3%A7+des+Cardassar" target="_blank" class="px-3.5 py-2 rounded-xl bg-gold-300 text-stone-950 font-bold text-xs flex items-center gap-1.5">
+                        <i class="fa-solid fa-route"></i> Google Maps
+                    </a>
+                </div>
+
+                <!-- Static Custom Architectural Vector Snapshot Map of Sant Llorenç & East Mallorca -->
+                <div class="relative rounded-2xl overflow-hidden border border-gold-300/30 bg-[#121619] shadow-inner">
+                    <svg viewBox="0 0 600 340" class="w-full h-auto block">
+                        <!-- Mediterranean Sea (Right Coastline) -->
+                        <path d="M 470,0 Q 450,90 485,170 T 460,340 L 600,340 L 600,0 Z" fill="#132a38" />
+                        <path d="M 470,0 Q 450,90 485,170 T 460,340" fill="none" stroke="#2c5d7c" stroke-width="3" stroke-dasharray="6,4" />
+                        <text x="535" y="185" fill="#4889b0" font-size="11" font-family="sans-serif" letter-spacing="2" text-anchor="middle">MITTELMEER</text>
+
+                        <!-- Topographic Grid Lines -->
+                        <g stroke="rgba(255,255,255,0.04)" stroke-width="1">
+                            <line x1="0" y1="68" x2="600" y2="68"/><line x1="0" y1="136" x2="600" y2="136"/>
+                            <line x1="0" y1="204" x2="600" y2="204"/><line x1="0" y1="272" x2="600" y2="272"/>
+                            <line x1="120" y1="0" x2="120" y2="340"/><line x1="240" y1="0" x2="240" y2="340"/>
+                            <line x1="360" y1="0" x2="360" y2="340"/><line x1="480" y1="0" x2="480" y2="340"/>
+                        </g>
+
+                        <!-- Main Roads (Ma-15 & Ma-4021) -->
+                        <path d="M 20,310 L 185,225 L 295,165 L 430,150" fill="none" stroke="#44403c" stroke-width="4" />
+                        <path d="M 295,165 L 270,85" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-dasharray="4,4" />
+                        <text x="242" y="122" fill="#e6c875" font-size="9" font-weight="bold">Ma-4021</text>
+
+                        <!-- Airport PMI Direction West -->
+                        <g transform="translate(55, 295)">
+                            <circle cx="0" cy="0" r="8" fill="#292524" stroke="#a8a29e" stroke-width="1.5"/>
+                            <text x="14" y="4" fill="#a8a29e" font-size="10" font-weight="bold">← Palma Airport (PMI • 48 Min.)</text>
+                        </g>
+
+                        <!-- Manacor (Large Supermarkets: Mercadona / Lidl / Aldi) -->
+                        <g transform="translate(185, 225)">
+                            <circle cx="0" cy="0" r="9" fill="#3b82f6" stroke="#fff" stroke-width="2"/>
+                            <text x="0" y="22" fill="#e7e5e4" font-size="11" font-weight="bold" text-anchor="middle">Manacor (10 Min.)</text>
+                            <text x="0" y="34" fill="#93c5fd" font-size="9" text-anchor="middle">Mercadona • Lidl • Aldi • Carrefour</text>
+                        </g>
+
+                        <!-- Sant Llorenç des Cardassar (Local Center & Eroski) -->
+                        <g transform="translate(295, 165)">
+                            <circle cx="0" cy="0" r="8" fill="#10b981" stroke="#fff" stroke-width="2"/>
+                            <text x="14" y="-6" fill="#e7e5e4" font-size="11" font-weight="bold">Sant Llorenç Zentrum (4 Min.)</text>
+                            <text x="14" y="7" fill="#6ee7b7" font-size="9">Eroski Supermarkt • Bäckerei • Apotheke</text>
+                        </g>
+
+                        <!-- FINCA BOSCO (Main Pin) -->
+                        <g transform="translate(270, 85)">
+                            <circle cx="0" cy="0" r="18" fill="rgba(230,200,117,0.2)" />
+                            <circle cx="0" cy="0" r="9" fill="#e6c875" stroke="#0c0a09" stroke-width="2.5"/>
+                            <rect x="-65" y="-38" width="130" height="22" rx="6" fill="#e6c875"/>
+                            <text x="0" y="-23" fill="#0c0a09" font-size="11" font-weight="bold" text-anchor="middle">★ FINCA BOSCO</text>
+                        </g>
+
+                        <!-- Cala Millor / Sa Coma Beaches -->
+                        <g transform="translate(465, 148)">
+                            <circle cx="0" cy="0" r="8" fill="#f59e0b" stroke="#fff" stroke-width="2"/>
+                            <text x="-12" y="-12" fill="#fde68a" font-size="10" font-weight="bold" text-anchor="end">Strand Cala Millor & Sa Coma (14 Min.)</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Curated Supermarket & Hotspot Directory -->
+                <div class="space-y-2.5">
+                    <h5 class="text-xs uppercase tracking-widest text-stone-400 font-semibold">Supermärkte & Wichtige Spots in der Nähe</h5>
+                    
+                    <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between gap-3">
+                        <div>
+                            <span class="text-[10px] uppercase tracking-wider text-emerald-400 font-bold">Nächster Supermarkt • 4 Min. Fahrt</span>
+                            <h6 class="text-sm font-bold text-white">Eroski Sant Llorenç & Wochenmarkt</h6>
+                            <p class="text-xs text-stone-400">Carrer Major, 07530 Sant Llorenç des Cardassar – Perfekt für frische Brötchen, Wasser & schnelle Besorgungen.</p>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Eroski+Sant+Lloren%C3%A7+des+Cardassar" target="_blank" class="px-3 py-2 rounded-xl luxury-glass-light hover:border-gold-300 text-gold-300 text-xs flex-shrink-0">
+                            Route <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                        </a>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between gap-3">
+                        <div>
+                            <span class="text-[10px] uppercase tracking-wider text-blue-400 font-bold">Großeinkauf • ca. 10–12 Min. Fahrt</span>
+                            <h6 class="text-sm font-bold text-white">Mercadona & Lidl Manacor</h6>
+                            <p class="text-xs text-stone-400">Riesige Auswahl an frischem Fisch, Fleisch für den BBQ-Grill, Getränken und spanischen Spezialitäten.</p>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Mercadona+Manacor" target="_blank" class="px-3 py-2 rounded-xl luxury-glass-light hover:border-gold-300 text-gold-300 text-xs flex-shrink-0">
+                            Route <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                        </a>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between gap-3">
+                        <div>
+                            <span class="text-[10px] uppercase tracking-wider text-amber-400 font-bold">Strand & Küste • ca. 14 Min. Fahrt</span>
+                            <h6 class="text-sm font-bold text-white">Platja de Cala Millor & Sa Coma</h6>
+                            <p class="text-xs text-stone-400">Feiner heller Sandstrand, Strandpromenade und Supermärkte (Müller, Aldi, Eroski) direkt an der Küste.</p>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Cala+Millor+Beach" target="_blank" class="px-3 py-2 rounded-xl luxury-glass-light hover:border-gold-300 text-gold-300 text-xs flex-shrink-0">
+                            Route <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 6: Kontakt-Reiter (Marco Metz) -->
+            <div id="tab-contact" class="concierge-section hidden space-y-5">
+                <div class="p-6 rounded-3xl bg-gradient-to-br from-stone-900 via-stone-900/90 to-stone-950 border border-gold-300/40 shadow-2xl relative overflow-hidden">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-2xl bg-gold-300 text-stone-950 flex items-center justify-center font-serif text-2xl font-bold shadow-lg flex-shrink-0">
+                            MM
+                        </div>
+                        <div>
+                            <span class="text-[10px] uppercase tracking-[0.25em] text-gold-300 font-semibold block">Hauptansprechpartner & Orga</span>
+                            <h4 class="font-serif text-3xl text-white leading-tight">Marco Metz</h4>
+                            <p class="text-xs text-stone-400 mt-0.5">Finca Bosco Gruppenurlaub • 31.10. – 07.11.2026</p>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-stone-300 mt-4 leading-relaxed">
+                        Fragen zur Anreise vom Flughafen Palma, Schlüsselübergabe an der Finca Bosco, Mietwagen-Koordination oder Zimmerwünschen? Kontaktiere Marco direkt:
+                    </p>
+
+                    <!-- Direct Contact Channels (Editable Phone/Mail stored in localStorage if customized) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-5">
+                        <a id="marco-whatsapp-link" href="https://wa.me/?text=Hi%20Marco%2C%20ich%20habe%20eine%20Frage%20zur%20Finca%20Bosco%20auf%20Mallorca!" target="_blank"
+                           class="flex items-center justify-center gap-2.5 py-3 px-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-bold text-xs uppercase tracking-wider transition shadow-lg">
+                            <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp schreiben
+                        </a>
+                        <a id="marco-call-link" href="tel:+491700000000"
+                           class="flex items-center justify-center gap-2.5 py-3 px-4 rounded-2xl bg-gold-300 hover:bg-gold-400 text-stone-950 font-bold text-xs uppercase tracking-wider transition shadow-lg">
+                            <i class="fa-solid fa-phone"></i> Direkt anrufen
+                        </a>
+                        <a id="marco-mail-link" href="mailto:marco.metz@example.com?subject=Finca%20Bosco%20Mallorca%202026"
+                           class="flex items-center justify-center gap-2.5 py-3 px-4 rounded-2xl luxury-glass-light hover:bg-white/15 text-white font-semibold text-xs uppercase tracking-wider transition sm:col-span-2">
+                            <i class="fa-regular fa-envelope text-gold-300"></i> E-Mail an Marco Metz senden
+                        </a>
+                    </div>
+
+                    <!-- Quick Customizer for Marco's Phone / Email (saved locally) -->
+                    <div class="mt-5 pt-4 border-t border-white/10">
+                        <span class="text-[10px] uppercase tracking-widest text-stone-400 block mb-2">Kontaktdaten hinterlegen / anpassen:</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="marco-phone-input" placeholder="Telefon / WhatsApp (+49...)" oninput="updateMarcoContact()"
+                                   class="px-3 py-2 rounded-xl bg-white/5 border border-white/15 text-xs text-white focus:border-gold-300 focus:outline-none">
+                            <input type="email" id="marco-email-input" placeholder="E-Mail-Adresse von Marco" oninput="updateMarcoContact()"
+                                   class="px-3 py-2 rounded-xl bg-white/5 border border-white/15 text-xs text-white focus:border-gold-300 focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direct Message / Quick Note Board for Marco -->
+                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+                    <h5 class="font-serif text-xl text-gold-300">Ankunftszeit & Rückmeldung an Marco senden</h5>
+                    <form onsubmit="sendNoteToMarco(event)" class="space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <input type="text" id="msg-sender" required placeholder="Dein Name" class="px-3.5 py-2.5 rounded-xl bg-stone-950/70 border border-white/15 text-xs text-white focus:border-gold-300 focus:outline-none">
+                            <input type="text" id="msg-flight" placeholder="Flugnummer & Ankunftszeit (optional)" class="px-3.5 py-2.5 rounded-xl bg-stone-950/70 border border-white/15 text-xs text-white focus:border-gold-300 focus:outline-none">
+                        </div>
+                        <textarea id="msg-body" rows="2" required placeholder="Nachricht an Marco Metz (z.B. 'Landen um 14:20 Uhr in Palma, bringen noch Getränke mit!')" class="w-full px-3.5 py-2.5 rounded-xl bg-stone-950/70 border border-white/15 text-xs text-white focus:border-gold-300 focus:outline-none"></textarea>
+                        <button type="submit" class="w-full py-2.5 rounded-xl bg-gold-300 hover:bg-gold-400 text-stone-950 font-bold text-xs uppercase tracking-wider">
+                            Nachricht speichern & für WhatsApp vorbereiten
+                        </button>
+                    </form>
+                    <div id="marco-messages-list" class="space-y-2 pt-2"></div>
+                </div>
+
+                <!-- Finca Address Copy Box -->
+                <div class="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between gap-3">
+                    <div class="text-xs">
+                        <span class="text-gold-300 font-bold block uppercase tracking-wider text-[10px]">Zieladresse für Navi & Mietwagen</span>
+                        <span class="text-white font-medium">Finca Bosco, Ma-4021, 07540 Sant Llorenç des Cardassar</span>
+                    </div>
+                    <button onclick="copyFincaAddress()" id="copy-addr-btn" class="px-3 py-2 rounded-xl luxury-glass-light hover:border-gold-300 text-xs text-gold-300 flex-shrink-0">
+                        <i class="fa-regular fa-copy mr-1"></i> Kopieren
+                    </button>
+                </div>
+            </div>
+
         </div>
     </aside>
 
-    <!-- JAVASCRIPT: SPATIAL GRAPH, 3D CAMERA & STATE LOGIC -->
+    <!-- JAVASCRIPT ENGINE -->
     <script>
         const fallbackImage = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80";
 
         // ============================================================================
-        // 1. SPATIAL ARCHITECTURAL GRAPH OF FINCA BOSCO (All exact image filenames)
+        // 1. COMPLETE SPATIAL GRAPH OF FINCA BOSCO (All exact local photo filenames)
         // ============================================================================
         const fincaNodes = {
             veranda: {
-                id: 'veranda',
-                order: 1,
-                floor: 'OUT',
+                id: 'veranda', order: 1, floor: 'OUT',
                 zoneLabel: 'AUSSENBEREICH • ANKUNFT',
                 title: 'Veranda, Einfahrt & Naturstein-Fassade',
                 shortName: 'Veranda & Eingang',
-                desc: 'Hier beginnt unsere Reise auf der Finca Bosco. Die weitläufige Naturstein-Veranda verbindet den Haupteingang mit den Sonnenterrassen, dem 50 m² Pool und dem Gästehaus.',
+                desc: 'Du stehst vor der Naturstein-Fassade der Finca Bosco. Klicke auf einen Hotspot im Raum oder minimiere die Textfelder über das Minus-Symbol für den vollen Panorama-Blick.',
                 images: [
                     '3df79b76-4042-43b1-9bc5-e2d16b8bf527.jpeg',
                     '80e3c3fa-6b8f-4973-ba7e-711a9718cfa4.jpg',
@@ -370,21 +669,18 @@
                     'd4cd2176-ff6b-42b6-9af3-81316a2895f0.jpeg'
                 ],
                 hotspots: [
-                    { target: 'foyer', label: 'Haupthaus betreten (Eingangshalle)', x: 52, y: 48, icon: 'fa-door-open' },
-                    { target: 'pool', label: 'Zum 50 m² Pool & Sonnenliegen', x: 22, y: 62, icon: 'fa-water-ladder' },
-                    { target: 'bbq', label: 'Zur Schilfrohr-Pergola & BBQ', x: 78, y: 58, icon: 'fa-fire-burner' },
-                    { target: 'guesthouse', label: 'Zum separaten Gästehaus', x: 82, y: 40, icon: 'fa-house-user' }
+                    { target: 'foyer', label: 'Haupthaus betreten (Eingangshalle)', x: 52, y: 46, icon: 'fa-door-open' },
+                    { target: 'pool', label: 'Zum 50 m² Pool & Sonnenliegen', x: 23, y: 58, icon: 'fa-water-ladder' },
+                    { target: 'bbq', label: 'Zur Schilfrohr-Pergola & BBQ', x: 77, y: 55, icon: 'fa-fire-burner' },
+                    { target: 'guesthouse', label: 'Zum separaten Gästehaus', x: 80, y: 36, icon: 'fa-house-user' }
                 ]
             },
-
             pool: {
-                id: 'pool',
-                order: 2,
-                floor: 'OUT',
+                id: 'pool', order: 2, floor: 'OUT',
                 zoneLabel: 'AUSSENBEREICH • POOL-DECK',
                 title: '50 m² Pool, Kinderbecken & Palmen-Dusche',
                 shortName: '50m² Pool & Liegen',
-                desc: 'Das Herzstück unter freiem Himmel: 50 m² Pool mit integriertem runden Kinder-Planschbecken, 12 Sonnenliegen und einer erfrischenden Outdoor-Dusche direkt unter einer Palme.',
+                desc: '50 m² Pool mit integriertem runden Kinder-Planschbecken, 12 Liegestühlen und einer Outdoor-Dusche unter Palmen.',
                 images: [
                     '864dc7cd-8d11-4e2f-937e-d79204002da7.jpeg',
                     '0ef8db97-7c9a-477d-a342-fab81d2ea583.jpeg',
@@ -392,19 +688,16 @@
                     'af3737be-0ce7-4408-aec3-d047a9c6ef4a.jpg'
                 ],
                 hotspots: [
-                    { target: 'bbq', label: 'Hinüber zur BBQ-Pergola', x: 74, y: 50, icon: 'fa-utensils' },
-                    { target: 'veranda', label: 'Zurück zur Veranda & Haupthaus', x: 26, y: 56, icon: 'fa-person-walking-arrow-loop-left' }
+                    { target: 'bbq', label: 'Zur BBQ-Pergola & Esstisch', x: 74, y: 48, icon: 'fa-utensils' },
+                    { target: 'veranda', label: 'Zurück zur Veranda & Haupthaus', x: 26, y: 52, icon: 'fa-person-walking-arrow-loop-left' }
                 ]
             },
-
             bbq: {
-                id: 'bbq',
-                order: 3,
-                floor: 'OUT',
+                id: 'bbq', order: 3, floor: 'OUT',
                 zoneLabel: 'AUSSENBEREICH • DINING & GRILL',
                 title: 'Schilfrohr-Pergola & Gemauerter BBQ-Grill',
                 shortName: 'BBQ & Pergola',
-                desc: 'Direkt neben dem Pool gelegen: Die schattige Schilfrohr-Pergola mit langem Esstisch für die ganze Gruppe, Stehtisch, gemauertem BBQ-Grill sowie zusätzlichem Kugelgrill.',
+                desc: 'Überdachte Schilfrohr-Pergola mit langem Gruppentisch, Stehtisch, gemauertem BBQ-Grill und zusätzlichem Kugelgrill.',
                 images: [
                     '1e88fa13-d873-438c-ad5a-c34a348770b9.jpg',
                     '07a9e70c-5c8d-4290-8efe-1ca293481528.jpg',
@@ -414,149 +707,112 @@
                     '2019b34a-3426-44a6-89fa-f2db09cd5ef4.jpeg'
                 ],
                 hotspots: [
-                    { target: 'pool', label: 'Direkt zum Pool', x: 25, y: 55, icon: 'fa-water' },
-                    { target: 'kitchen', label: 'Rein in die Landhausküche', x: 68, y: 45, icon: 'fa-kitchen-set' },
-                    { target: 'guesthouse', label: 'Zum Gästehaus (Gelbe Bar)', x: 82, y: 62, icon: 'fa-martini-glass-citrus' }
+                    { target: 'pool', label: 'Zum Pool-Deck', x: 25, y: 52, icon: 'fa-water' },
+                    { target: 'kitchen', label: 'In die Landhausküche', x: 68, y: 44, icon: 'fa-kitchen-set' },
+                    { target: 'guesthouse', label: 'Zum Gästehaus (Gelbe Bar)', x: 80, y: 60, icon: 'fa-martini-glass-citrus' }
                 ]
             },
-
             foyer: {
-                id: 'foyer',
-                order: 4,
-                floor: 'EG',
+                id: 'foyer', order: 4, floor: 'EG',
                 zoneLabel: 'HAUPTHAUS • ERDGESCHOSS',
-                title: 'Eingangshalle & Offene Galerie-Treppe',
+                title: 'Eingangshalle & Galerie',
                 shortName: 'Eingangshalle (EG)',
-                desc: 'Der zentrale Knotenpunkt im Haupthaus: Hohe Decken, traditionelle Steinbögen und der Aufgang zur Galerie im Obergeschoss. Von hier erreichst du Wohnzimmer, Küche und die EG-Schlafzimmer.',
-                images: [
-                    '6a2a1218-3cc6-48d1-b6b7-1cabab433fa5.jpeg'
-                ],
+                desc: 'Zentrale Halle des Haupthauses mit Natursteinbogen und Galerie-Aufgang ins Obergeschoss.',
+                images: ['6a2a1218-3cc6-48d1-b6b7-1cabab433fa5.jpeg'],
                 hotspots: [
-                    { target: 'living', label: 'Ins Wohnzimmer (Klavier & Kamin)', x: 30, y: 58, icon: 'fa-couch' },
-                    { target: 'kitchen', label: 'Zur großen Landhausküche', x: 75, y: 60, icon: 'fa-utensils' },
-                    { target: 'room3', label: 'Zimmer 3 ("Blumenbild") im EG', x: 20, y: 45, icon: 'fa-bed' },
-                    { target: 'room4', label: 'Zimmer 4 ("Holzschrank") im EG', x: 82, y: 45, icon: 'fa-bed' },
-                    { target: 'room1', label: 'Treppe hoch ins Obergeschoss (Master & Suite)', x: 52, y: 28, icon: 'fa-stairs' },
-                    { target: 'veranda', label: 'Nach draußen zur Veranda', x: 50, y: 82, icon: 'fa-sun' }
+                    { target: 'living', label: 'Ins Wohnzimmer (Klavier & Kamin)', x: 30, y: 55, icon: 'fa-couch' },
+                    { target: 'kitchen', label: 'Zur Landhausküche', x: 75, y: 56, icon: 'fa-utensils' },
+                    { target: 'room3', label: 'Zimmer 3 ("Blumenbild")', x: 22, y: 40, icon: 'fa-bed' },
+                    { target: 'room4', label: 'Zimmer 4 ("Holzschrank")', x: 80, y: 40, icon: 'fa-bed' },
+                    { target: 'room1', label: 'Treppe ins OG (Master & Gewölbe-Suite)', x: 52, y: 26, icon: 'fa-stairs' },
+                    { target: 'veranda', label: 'Nach draußen zur Veranda', x: 50, y: 76, icon: 'fa-sun' }
                 ]
             },
-
             living: {
-                id: 'living',
-                order: 5,
-                floor: 'EG',
+                id: 'living', order: 5, floor: 'EG',
                 zoneLabel: 'HAUPTHAUS • ERDGESCHOSS',
-                title: 'Haupthaus-Salon mit Klavier & Kamin',
+                title: 'Haupthaus Wohnzimmer mit Klavier & Kamin',
                 shortName: 'Salon & Klavier',
-                desc: 'Weitläufiges Wohnzimmer im Erdgeschoss des Haupthauses mit echtem Klavier am sonnigen Fenster, gemütlicher Sofalandschaft, Kamin und TV.',
+                desc: 'Gemütlicher Wohnbereich im Haupthaus mit echtem Klavier am Fenster, Kamin und TV.',
                 images: [
                     '0636c084-8fe2-4c20-aaea-8e3cf84f99b8.jpeg',
                     '7890396e-ada8-4b6b-90d9-1ce837e27f46.jpeg',
                     'd79898b6-41ed-48db-a1c2-4b4598ace92e.jpeg'
                 ],
                 hotspots: [
-                    { target: 'foyer', label: 'Zurück in die Eingangshalle', x: 25, y: 65, icon: 'fa-arrow-left' },
-                    { target: 'kitchen', label: 'Weiter in die Landhausküche', x: 76, y: 55, icon: 'fa-kitchen-set' },
-                    { target: 'room3', label: 'Zu Zimmer 3 ("Blumenbild")', x: 48, y: 42, icon: 'fa-bed' }
+                    { target: 'foyer', label: 'Zur Eingangshalle', x: 25, y: 60, icon: 'fa-arrow-left' },
+                    { target: 'kitchen', label: 'In die Landhausküche', x: 76, y: 52, icon: 'fa-kitchen-set' },
+                    { target: 'room3', label: 'Zu Zimmer 3 ("Blumenbild")', x: 48, y: 38, icon: 'fa-bed' }
                 ]
             },
-
             kitchen: {
-                id: 'kitchen',
-                order: 6,
-                floor: 'EG',
+                id: 'kitchen', order: 6, floor: 'EG',
                 zoneLabel: 'HAUPTHAUS • ERDGESCHOSS',
-                title: 'Mallorquinische Landhausküche mit Kamin',
+                title: 'Haupthaus Landhausküche mit Holztisch & Kamin',
                 shortName: 'Landhausküche',
-                desc: 'Traditionelle große Küche im Haupthaus mit langem Holztisch, eigenem Kamin und direktem Ausgang auf die Terrasse und zur BBQ-Pergola.',
+                desc: 'Große mallorquinische Küche mit langem Holztisch, eigenem Kamin und direktem Zugang zur Grill-Terrasse.',
                 images: [
                     '76566f58-1a2d-4d5a-a14c-373494a72398.jpeg',
                     '0882405f-1a34-4da2-9cb2-abc9a5670fc8.jpeg',
                     'd514dfd7-3de1-4a00-ba38-d544a831ceb1.jpeg'
                 ],
                 hotspots: [
-                    { target: 'foyer', label: 'Zur Eingangshalle', x: 28, y: 55, icon: 'fa-compass' },
-                    { target: 'bbq', label: 'Raus zur BBQ-Pergola & Pool', x: 75, y: 52, icon: 'fa-fire-burner' },
-                    { target: 'bathrooms', label: 'Die 4 Badezimmer ansehen', x: 50, y: 74, icon: 'fa-bath' }
+                    { target: 'foyer', label: 'Zur Eingangshalle', x: 28, y: 52, icon: 'fa-compass' },
+                    { target: 'bbq', label: 'Raus zur BBQ-Pergola', x: 75, y: 48, icon: 'fa-fire-burner' },
+                    { target: 'bathrooms', label: 'Die 4 Badezimmer ansehen', x: 50, y: 70, icon: 'fa-bath' }
                 ]
             },
-
             room3: {
-                id: 'room3',
-                order: 7,
-                floor: 'EG',
-                isBedroom: true,
-                roomId: 3,
-                beds: 2,
-                zoneLabel: 'SCHLAFZIMMER 3 • HAUPTHAUS EG',
+                id: 'room3', order: 7, floor: 'EG', isBedroom: true, roomId: 3, beds: 2,
+                zoneLabel: 'SCHLAFZIMMER 3 • HAUPTHAUS',
                 title: 'Zimmer 3: Doppelzimmer "Blumenbild"',
                 shortName: 'Zi. 3 "Blumenbild"',
-                desc: 'Ruhig gelegenes Doppelzimmer im Haupthaus mit markantem Blumenbild über dem Doppelbett, Nachttischen und kurzen Wegen ins Erdgeschoss-Bad sowie zum Pool.',
+                desc: 'Ruhiges Doppelzimmer im Haupthaus mit charakteristischem Blumenbild über dem Bett.',
                 images: [
                     '498add3a-e539-4d0d-ba91-43d391bf6c0e.jpeg',
                     '10e4cad7-ea56-47c8-845b-f456c2ef706e.jpeg'
                 ],
                 hotspots: [
-                    { target: 'foyer', label: 'Zurück in die Eingangshalle', x: 24, y: 60, icon: 'fa-door-open' },
-                    { target: 'room4', label: 'Nachbarzimmer: Zimmer 4 ("Holzschrank")', x: 78, y: 56, icon: 'fa-bed' },
-                    { target: 'bathrooms', label: 'Angrenzendes Badezimmer ansehen', x: 52, y: 76, icon: 'fa-shower' }
+                    { target: 'foyer', label: 'Zur Eingangshalle', x: 24, y: 56, icon: 'fa-door-open' },
+                    { target: 'room4', label: 'Zu Zimmer 4 ("Holzschrank")', x: 78, y: 52, icon: 'fa-bed' },
+                    { target: 'bathrooms', label: 'Zu den Badezimmern', x: 52, y: 72, icon: 'fa-shower' }
                 ]
             },
-
             room4: {
-                id: 'room4',
-                order: 8,
-                floor: 'EG',
-                isBedroom: true,
-                roomId: 4,
-                beds: 2,
-                zoneLabel: 'SCHLAFZIMMER 4 • HAUPTHAUS EG',
+                id: 'room4', order: 8, floor: 'EG', isBedroom: true, roomId: 4, beds: 2,
+                zoneLabel: 'SCHLAFZIMMER 4 • HAUPTHAUS',
                 title: 'Zimmer 4: Doppelzimmer "Holzschrank"',
                 shortName: 'Zi. 4 "Holzschrank"',
-                desc: 'Gemütliches Doppelzimmer im Haupthaus mit großem antiken Massivholzschrank und direktem Zugang zum Badezimmer.',
-                images: [
-                    'adb1cfa0-6043-4e3e-8aaa-73f1097cec24.jpeg'
-                ],
+                desc: 'Doppelzimmer mit traditionellem Massivholzschrank und direktem Badezimmer-Zugang.',
+                images: ['adb1cfa0-6043-4e3e-8aaa-73f1097cec24.jpeg'],
                 hotspots: [
-                    { target: 'bathrooms', label: 'Direkter Bad-Zugang (Bäder ansehen)', x: 75, y: 52, icon: 'fa-bath' },
-                    { target: 'foyer', label: 'Zur Eingangshalle', x: 26, y: 62, icon: 'fa-door-open' },
-                    { target: 'room5', label: 'Weiter zur Gewölbe-Suite (Zimmer 5)', x: 52, y: 38, icon: 'fa-bed' }
+                    { target: 'bathrooms', label: 'Direkter Bad-Zugang', x: 75, y: 50, icon: 'fa-bath' },
+                    { target: 'foyer', label: 'Zur Eingangshalle', x: 26, y: 58, icon: 'fa-door-open' },
+                    { target: 'room5', label: 'Zur Gewölbe-Suite (Zimmer 5)', x: 52, y: 36, icon: 'fa-bed' }
                 ]
             },
-
             room5: {
-                id: 'room5',
-                order: 9,
-                floor: 'OG',
-                isBedroom: true,
-                roomId: 5,
-                beds: 3,
+                id: 'room5', order: 9, floor: 'OG', isBedroom: true, roomId: 5, beds: 3,
                 zoneLabel: 'SCHLAFZIMMER 5 • HAUPTHAUS SUITE',
                 title: 'Zimmer 5: Gewölbe-Dreibettzimmer / Suite',
-                shortName: 'Zi. 5 Gewölbe-Suite (3B)',
-                desc: 'Außergewöhnliche, großzügige Suite mit charakteristischem Rundbogen-Gewölbe, elegantem Vorhang-Raumteiler und Platz für bis zu 3 Personen.',
+                shortName: 'Zi. 5 Gewölbe-Suite',
+                desc: 'Geräumige Dreibett-/Familiensuite mit markantem Steinbogen-Gewölbe und Vorhang.',
                 images: [
                     '19104398-e469-4e76-ac16-08d645ac511e.jpeg',
                     '19104398-e469-4e76-ac16-08d645ac511e_2.jpeg',
                     '5769cd12-4510-4645-9e8e-1509990d77bd.jpeg'
                 ],
                 hotspots: [
-                    { target: 'room1', label: 'Zum Master-Zimmer (OG mit Meerblick)', x: 74, y: 48, icon: 'fa-crown' },
-                    { target: 'foyer', label: 'Zurück zur Galerie & Eingangshalle', x: 26, y: 62, icon: 'fa-stairs' }
+                    { target: 'room1', label: 'Zum Master-Zimmer (OG mit Meerblick)', x: 74, y: 46, icon: 'fa-crown' },
+                    { target: 'foyer', label: 'Hinunter in die Eingangshalle', x: 26, y: 58, icon: 'fa-stairs' }
                 ]
             },
-
             room1: {
-                id: 'room1',
-                order: 10,
-                floor: 'OG',
-                isBedroom: true,
-                roomId: 1,
-                beds: 2,
+                id: 'room1', order: 10, floor: 'OG', isBedroom: true, roomId: 1, beds: 2,
                 zoneLabel: 'SCHLAFZIMMER 1 • OBERGESCHOSS',
-                title: 'Zimmer 1: Master-Suite mit Meerblick-Balkon',
+                title: 'Zimmer 1: Master-Zimmer mit Meerblick-Balkon',
                 shortName: 'Zi. 1 Master (OG)',
-                desc: 'Das Highlight im Obergeschoss des Haupthauses: Großes Master-Schlafzimmer mit eigenem Panorama-Balkon, Weitblick über die Hügellandschaft bis zum Meer und en-suite Bad.',
+                desc: 'Master-Schlafzimmer im Obergeschoss mit Zugang zum großen Panorama-Balkon und Meerblick am Horizont.',
                 images: [
                     '13f9857c-9a32-4030-923b-543046a42fed.jpeg',
                     '756a1f53-62a3-473c-8468-a78330abd916.jpeg',
@@ -564,61 +820,47 @@
                     '3cdad293-1bb9-47cd-9212-fbbdde5c51ed.jpeg'
                 ],
                 hotspots: [
-                    { target: 'room5', label: 'Zur Gewölbe-Suite (Zimmer 5)', x: 25, y: 58, icon: 'fa-bed' },
-                    { target: 'bathrooms', label: 'En-suite Badezimmer ansehen', x: 78, y: 60, icon: 'fa-bath' },
-                    { target: 'foyer', label: 'Treppe hinunter ins Erdgeschoss', x: 50, y: 78, icon: 'fa-stairs' }
+                    { target: 'room5', label: 'Zur Gewölbe-Suite (Zimmer 5)', x: 25, y: 54, icon: 'fa-bed' },
+                    { target: 'bathrooms', label: 'En-suite Bad ansehen', x: 78, y: 56, icon: 'fa-bath' },
+                    { target: 'foyer', label: 'Treppe hinunter ins EG', x: 50, y: 74, icon: 'fa-stairs' }
                 ]
             },
-
             guesthouse: {
-                id: 'guesthouse',
-                order: 11,
-                floor: 'GH',
+                id: 'guesthouse', order: 11, floor: 'GH',
                 zoneLabel: 'SEPARATES GÄSTEHAUS',
-                title: 'Gästehaus: Wohn-/Essbereich mit gelber Bar',
+                title: 'Gästehaus Wohn-/Essbereich mit gelber Bar',
                 shortName: 'Gästehaus-Lounge',
-                desc: 'Komplett eigenständige Einheit auf dem Finca-Gelände: Zweites Wohnzimmer mit Kamin & TV, Essbereich und einer coolen gelben Bar/Küche – perfekt für ungestörte Rückzugsmomente.',
+                desc: 'Eigenständiges Gästehaus mit zweitem Wohnzimmer (Kamin & TV), Essplatz und markanter gelber Bar/Küche.',
                 images: [
                     '29d075d4-6669-48a5-aee9-2f5519bef138.jpeg',
                     '7890396e-ada8-4b6b-90d9-1ce837e27f46.jpeg',
                     '7890396e-ada8-4b6b-90d9-1ce837e27f46_2.jpeg'
                 ],
                 hotspots: [
-                    { target: 'room2', label: 'Ins Gästehaus-Schlafzimmer (Zimmer 2)', x: 72, y: 50, icon: 'fa-bed' },
-                    { target: 'pool', label: 'Raus zum Pool-Deck', x: 25, y: 60, icon: 'fa-water-ladder' },
-                    { target: 'veranda', label: 'Zurück zum Haupthaus', x: 48, y: 78, icon: 'fa-house' }
+                    { target: 'room2', label: 'Ins Gästehaus-Schlafzimmer (Zimmer 2)', x: 72, y: 48, icon: 'fa-bed' },
+                    { target: 'pool', label: 'Raus zum Pool', x: 25, y: 56, icon: 'fa-water-ladder' },
+                    { target: 'veranda', label: 'Zurück zum Haupthaus', x: 48, y: 74, icon: 'fa-house' }
                 ]
             },
-
             room2: {
-                id: 'room2',
-                order: 12,
-                floor: 'GH',
-                isBedroom: true,
-                roomId: 2,
-                beds: 2,
+                id: 'room2', order: 12, floor: 'GH', isBedroom: true, roomId: 2, beds: 2,
                 zoneLabel: 'SCHLAFZIMMER 2 • GÄSTEHAUS',
-                title: 'Zimmer 2: Gästehaus-Zimmer (Schmiedeeisen-Bett)',
+                title: 'Zimmer 2: Gästehaus-Schlafzimmer',
                 shortName: 'Zi. 2 Gästehaus',
-                desc: 'Das private Schlafzimmer im separaten Gästehaus mit romantischem Schmiedeeisen-Doppelbett, beleuchteter Wandnische und direktem Anschluss an die gelbe Bar-Lounge.',
-                images: [
-                    '8dfeadcd-6aa5-42b0-8e45-19d859c916ab.jpeg'
-                ],
+                desc: 'Schlafzimmer im Gästehaus mit kunstvollem Schmiedeeisen-Bett und beleuchteter Wandnische.',
+                images: ['8dfeadcd-6aa5-42b0-8e45-19d859c916ab.jpeg'],
                 hotspots: [
-                    { target: 'guesthouse', label: 'Zurück in die Gästehaus-Lounge', x: 28, y: 60, icon: 'fa-couch' },
-                    { target: 'bathrooms', label: 'Gästehaus-Bad ansehen', x: 74, y: 56, icon: 'fa-shower' },
-                    { target: 'pool', label: 'Direkt zum Pool', x: 52, y: 80, icon: 'fa-sun' }
+                    { target: 'guesthouse', label: 'Zur Gästehaus-Lounge (Gelbe Bar)', x: 28, y: 56, icon: 'fa-couch' },
+                    { target: 'bathrooms', label: 'Badezimmer ansehen', x: 74, y: 52, icon: 'fa-shower' },
+                    { target: 'pool', label: 'Direkt zum Pool', x: 52, y: 74, icon: 'fa-sun' }
                 ]
             },
-
             bathrooms: {
-                id: 'bathrooms',
-                order: 13,
-                floor: 'EG',
+                id: 'bathrooms', order: 13, floor: 'EG',
                 zoneLabel: 'AUSSTATTUNG • 4 BADEZIMMER',
-                title: 'Die 4 mediterranen Badezimmer',
+                title: 'Die 4 Badezimmer der Finca Bosco',
                 shortName: 'Die 4 Bäder',
-                desc: 'Insgesamt verfügt die Finca Bosco über 4 voll ausgestattete Badezimmer mit Duschen, Badewanne und mediterranen Fliesen – verteilt auf Haupthaus (EG & OG) sowie Gästehaus.',
+                desc: 'Alle 4 Badezimmer des Anwesens im Überblick (verteilt auf Haupthaus EG, OG und Gästehaus).',
                 images: [
                     '31c73fc7-0066-4d2e-b072-364cbf78e206.jpeg',
                     '59b3b19d-8b8e-47c8-8074-c24ee4bdf4f0.jpeg',
@@ -627,53 +869,120 @@
                     'cfeb8350-080d-4e53-a475-0bd0b7d68d9e.jpeg'
                 ],
                 hotspots: [
-                    { target: 'foyer', label: 'Zurück in die Eingangshalle (Haupthaus)', x: 35, y: 65, icon: 'fa-arrow-left' },
-                    { target: 'room1', label: 'Zum Master-Schlafzimmer (OG)', x: 70, y: 50, icon: 'fa-bed' }
+                    { target: 'foyer', label: 'Zurück in die Eingangshalle', x: 35, y: 60, icon: 'fa-arrow-left' },
+                    { target: 'room1', label: 'Zum Master-Schlafzimmer (OG)', x: 70, y: 48, icon: 'fa-bed' }
                 ]
             }
         };
 
         const tourSequence = ['veranda', 'pool', 'bbq', 'foyer', 'living', 'kitchen', 'room3', 'room4', 'room5', 'room1', 'guesthouse', 'room2', 'bathrooms'];
         let currentNodeKey = 'veranda';
-        let activeRadarFloor = 'OUT';
+        let cinemaMode = false;
 
-        // LocalStorage State for Bed Assignments
         let bedAssignments = JSON.parse(localStorage.getItem('finca_beds_2026')) || {
-            1: ['', ''],
-            2: ['', ''],
-            3: ['', ''],
-            4: ['', ''],
-            5: ['', '', '']
+            1: ['', ''], 2: ['', ''], 3: ['', ''], 4: ['', ''], 5: ['', '', '']
         };
 
         // ============================================================================
-        // 2. IMMERSIVE NAVIGATION & 3D CAMERA ENGINE
+        // 2. MINIMIZE / MAXIMIZE OVERLAYS & FULLSCREEN CINEMA VIEW
+        // ============================================================================
+        function toggleRadarMinimize(minimize) {
+            document.getElementById('radar-expanded').classList.toggle('hidden', minimize);
+            document.getElementById('radar-minimized').classList.toggle('hidden', !minimize);
+        }
+
+        function toggleHudMinimize(minimize) {
+            document.getElementById('hud-expanded').classList.toggle('hidden', minimize);
+            document.getElementById('hud-minimized').classList.toggle('hidden', !minimize);
+        }
+
+        function toggleCinemaMode() {
+            cinemaMode = !cinemaMode;
+            const panels = [
+                document.getElementById('radar-wrapper'),
+                document.getElementById('hud-wrapper'),
+                document.getElementById('top-floor-bar'),
+                document.getElementById('hotspots-layer')
+            ];
+            panels.forEach(p => {
+                if (p) p.classList.toggle('cinema-hidden', cinemaMode);
+            });
+
+            const icon = document.getElementById('cinema-icon');
+            const label = document.getElementById('cinema-label');
+            const btn = document.getElementById('cinema-toggle-btn');
+
+            if (cinemaMode) {
+                icon.className = 'fa-solid fa-compress text-stone-950';
+                label.textContent = 'UI zeigen';
+                btn.classList.add('bg-gold-300', 'text-stone-950');
+            } else {
+                icon.className = 'fa-solid fa-expand text-gold-300';
+                label.textContent = 'Vollbild';
+                btn.classList.remove('bg-gold-300', 'text-stone-950');
+            }
+        }
+
+        // Ambient Lighting Mood Switcher
+        function setMood(mood) {
+            const bg = document.getElementById('scene-bg');
+            bg.classList.remove('mood-day', 'mood-sunset', 'mood-night');
+            bg.classList.add(`mood-${mood}`);
+
+            ['day', 'sunset', 'night'].forEach(m => {
+                const b = document.getElementById(`mood-btn-${m}`);
+                if (b) {
+                    b.className = m === mood
+                        ? 'px-2.5 py-1.5 rounded-full bg-gold-300 text-stone-950 font-bold transition'
+                        : 'px-2.5 py-1.5 rounded-full text-stone-300 hover:text-white transition';
+                }
+            });
+        }
+
+        // Keyboard Shortcuts (Arrow Left/Right + H for Cinema Mode)
+        window.addEventListener('keydown', (e) => {
+            if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+            if (e.key === 'ArrowRight') stepTour(1);
+            if (e.key === 'ArrowLeft') stepTour(-1);
+            if (e.key.toLowerCase() === 'h') toggleCinemaMode();
+        });
+
+        // Custom Cursor Follower
+        const cursorRing = document.getElementById('cursor-ring');
+        window.addEventListener('mousemove', (e) => {
+            if (cursorRing) {
+                cursorRing.style.left = `${e.clientX}px`;
+                cursorRing.style.top = `${e.clientY}px`;
+            }
+        });
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.closest('button, a, .hotspot, input')) {
+                cursorRing?.classList.add('cursor-hover');
+            } else {
+                cursorRing?.classList.remove('cursor-hover');
+            }
+        });
+
+        // ============================================================================
+        // 3. 3D CAMERA & HOTSPOT NAVIGATION
         // ============================================================================
         function goToNode(nodeKey) {
             if (!fincaNodes[nodeKey]) return;
             const canvas = document.getElementById('scene-canvas');
-
-            // 1. Trigger 3D Walk-Forward Zoom Effect
             canvas.classList.add('walking-forward');
 
             setTimeout(() => {
                 currentNodeKey = nodeKey;
                 const node = fincaNodes[nodeKey];
 
-                // Update Background Image to first image of node
-                const bg = document.getElementById('scene-bg');
-                bg.src = node.images[0];
-
-                // Sync Radar Tab with current floor
+                document.getElementById('scene-bg').src = node.images[0];
                 switchRadarTab(node.floor);
                 updateHeaderFloorButtons(node.floor);
 
-                // Render HUD, Thumbnails & 3D Hotspots
                 renderHUD(node);
                 renderThumbnails(node);
                 renderHotspots(node);
 
-                // Reset Camera Position from behind
                 canvas.classList.remove('walking-forward');
                 canvas.classList.add('walking-entered');
 
@@ -682,12 +991,12 @@
                         canvas.classList.remove('walking-entered');
                     });
                 });
-            }, 420);
+            }, 380);
         }
 
-        function stepTour(direction) {
+        function stepTour(dir) {
             const idx = tourSequence.indexOf(currentNodeKey);
-            const nextIdx = (idx + direction + tourSequence.length) % tourSequence.length;
+            const nextIdx = (idx + dir + tourSequence.length) % tourSequence.length;
             goToNode(tourSequence[nextIdx]);
         }
 
@@ -695,27 +1004,28 @@
             document.getElementById('hud-zone').textContent = node.zoneLabel;
             document.getElementById('hud-StepCounter').textContent = `Station ${node.order} / ${tourSequence.length}`;
             document.getElementById('hud-title').textContent = node.title;
+            document.getElementById('hud-min-title').textContent = node.shortName;
             document.getElementById('hud-desc').textContent = node.desc;
 
             const actionBox = document.getElementById('hud-room-action');
             if (node.isBedroom) {
                 const occupants = (bedAssignments[node.roomId] || []).filter(n => n.trim() !== '');
-                const statusBadge = occupants.length > 0
-                    ? `<span class="text-gold-300 font-semibold">${occupants.join(', ')}</span>`
-                    : `<span class="text-emerald-400">Noch freie Betten (${node.beds} Plätze)</span>`;
+                const badge = occupants.length > 0
+                    ? `<span class="text-gold-300 font-semibold text-xs"><i class="fa-solid fa-user-check mr-1"></i>${occupants.join(', ')}</span>`
+                    : `<span class="text-emerald-400 text-xs">${node.beds} Betten frei</span>`;
 
                 actionBox.innerHTML = `
                     <div class="flex items-center gap-3">
-                        <button onclick="openBedroomModal('${node.id}')" class="bg-white text-stone-950 hover:bg-gold-300 font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition shadow-lg">
-                            <i class="fa-solid fa-bed mr-1.5"></i> Betten-Check-in (${node.beds} Betten)
+                        <button onclick="openBedroomModal('${node.id}')" class="bg-white text-stone-950 hover:bg-gold-300 font-bold px-3.5 py-2 rounded-xl text-xs uppercase tracking-wider transition shadow-lg">
+                            <i class="fa-solid fa-bed mr-1.5"></i> Betten-Check-in
                         </button>
-                        <div class="text-xs hidden sm:block">${statusBadge}</div>
+                        ${badge}
                     </div>
                 `;
             } else {
                 actionBox.innerHTML = `
-                    <button onclick="openFullFloorplanModal()" class="luxury-glass-light hover:border-gold-300/60 px-3.5 py-2 rounded-xl text-xs text-stone-200 transition">
-                        <i class="fa-solid fa-map mr-1.5 text-gold-300"></i> Alle 5 Zimmer im Überblick
+                    <button onclick="openFullFloorplanModal()" class="luxury-glass-light hover:border-gold-300/60 px-3 py-2 rounded-xl text-xs text-stone-200 transition">
+                        <i class="fa-solid fa-bed mr-1.5 text-gold-300"></i> Bettenplan (5 Zimmer)
                     </button>
                 `;
             }
@@ -725,15 +1035,15 @@
             const container = document.getElementById('angle-thumbnails');
             container.innerHTML = '';
             node.images.forEach((imgSrc, idx) => {
-                const thumb = document.createElement('button');
-                thumb.className = `relative w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 border-2 transition ${idx === 0 ? 'border-gold-300 scale-105' : 'border-transparent opacity-65 hover:opacity-100'}`;
-                thumb.innerHTML = `<img src="${imgSrc}" onerror="this.src='${fallbackImage}'" class="w-full h-full object-cover">`;
-                thumb.onclick = () => {
+                const btn = document.createElement('button');
+                btn.className = `relative w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border-2 transition ${idx === 0 ? 'border-gold-300 scale-105' : 'border-transparent opacity-60 hover:opacity-100'}`;
+                btn.innerHTML = `<img src="${imgSrc}" onerror="this.src='${fallbackImage}'" class="w-full h-full object-cover">`;
+                btn.onclick = () => {
                     document.getElementById('scene-bg').src = imgSrc;
                     Array.from(container.children).forEach(c => c.classList.remove('border-gold-300', 'scale-105'));
-                    thumb.classList.add('border-gold-300', 'scale-105');
+                    btn.classList.add('border-gold-300', 'scale-105');
                 };
-                container.appendChild(thumb);
+                container.appendChild(btn);
             });
         }
 
@@ -743,21 +1053,21 @@
 
             node.hotspots.forEach(h => {
                 const targetNode = fincaNodes[h.target];
-                const isBedTarget = targetNode && targetNode.isBedroom;
+                const isBed = targetNode && targetNode.isBedroom;
                 const el = document.createElement('div');
-                el.className = 'hotspot group';
+                el.className = 'hotspot';
                 el.style.left = `${h.x}%`;
                 el.style.top = `${h.y}%`;
                 el.onclick = () => goToNode(h.target);
 
                 el.innerHTML = `
-                    <div class="relative flex items-center gap-3 luxury-glass px-4 py-2.5 rounded-full shadow-2xl border ${isBedTarget ? 'border-gold-300/80' : 'border-white/25'}">
+                    <div class="relative flex items-center gap-2.5 luxury-glass px-3.5 py-2 rounded-full shadow-2xl border ${isBed ? 'border-gold-300/80' : 'border-white/25'}">
                         <div class="hotspot-ring"></div>
-                        <div class="w-8 h-8 rounded-full ${isBedTarget ? 'bg-gold-300 text-stone-950' : 'bg-white/15 text-white'} flex items-center justify-center text-xs">
+                        <div class="w-7 h-7 rounded-full ${isBed ? 'bg-gold-300 text-stone-950' : 'bg-white/15 text-white'} flex items-center justify-center text-xs">
                             <i class="fa-solid ${h.icon}"></i>
                         </div>
                         <div class="pr-1">
-                            <span class="block text-[9px] uppercase tracking-[0.2em] text-gold-300 font-semibold">${isBedTarget ? 'Schlafzimmer' : 'Gehe zu'}</span>
+                            <span class="block text-[8px] uppercase tracking-[0.2em] text-gold-300 font-semibold">${isBed ? 'Schlafzimmer' : 'Station'}</span>
                             <span class="text-xs font-medium text-white whitespace-nowrap">${h.label}</span>
                         </div>
                     </div>
@@ -766,25 +1076,23 @@
             });
         }
 
-        // Mouse 3D Tilt Parallax Effect (Miu Miu Style)
+        // Subtle 3D Mouse Parallax
         document.getElementById('viewport').addEventListener('mousemove', (e) => {
             const canvas = document.getElementById('scene-canvas');
             if (canvas.classList.contains('walking-forward') || canvas.classList.contains('walking-entered')) return;
-
             const xRatio = (e.clientX / window.innerWidth - 0.5) * 2;
             const yRatio = (e.clientY / window.innerHeight - 0.5) * 2;
-
-            canvas.style.transform = `scale(1.04) rotateY(${xRatio * 3.5}deg) rotateX(${-yRatio * 2.5}deg) translate3d(${-xRatio * 14}px, ${-yRatio * 10}px, 0)`;
+            canvas.style.transform = `scale(1.04) rotateY(${xRatio * 3}deg) rotateX(${-yRatio * 2}deg) translate3d(${-xRatio * 12}px, ${-yRatio * 8}px, 0)`;
         });
 
         // ============================================================================
-        // 3. ARCHITECTURAL RADAR (2D SCHEMATIC FLOORPLAN)
+        // 4. ARCHITECTURAL RADAR SCHEMATIC
         // ============================================================================
         const radarLayouts = {
             OUT: [
-                { key: 'pool', label: '50m² Pool & Liegen', x: '8%', y: '12%', w: '42%', h: '48%' },
-                { key: 'bbq', label: 'BBQ & Pergola', x: '54%', y: '12%', w: '38%', h: '36%' },
-                { key: 'veranda', label: 'Veranda & Einfahrt', x: '15%', y: '66%', w: '70%', h: '26%' }
+                { key: 'pool', label: '50m² Pool & Liegen', x: '6%', y: '10%', w: '44%', h: '48%' },
+                { key: 'bbq', label: 'BBQ & Pergola', x: '54%', y: '10%', w: '40%', h: '48%' },
+                { key: 'veranda', label: 'Veranda & Eingang', x: '14%', y: '64%', w: '72%', h: '28%' }
             ],
             EG: [
                 { key: 'living', label: 'Salon & Klavier', x: '6%', y: '10%', w: '42%', h: '40%' },
@@ -794,17 +1102,16 @@
                 { key: 'room4', label: 'Zi. 4 Holzschrank', x: '66%', y: '56%', w: '28%', h: '36%' }
             ],
             OG: [
-                { key: 'room1', label: 'Zi. 1 Master + Meerblick-Balkon', x: '8%', y: '14%', w: '46%', h: '72%' },
-                { key: 'room5', label: 'Zi. 5 Gewölbe-Suite (3 Betten)', x: '58%', y: '14%', w: '34%', h: '72%' }
+                { key: 'room1', label: 'Zi. 1 Master (Meerblick)', x: '6%', y: '14%', w: '46%', h: '72%' },
+                { key: 'room5', label: 'Zi. 5 Gewölbe-Suite (3B)', x: '56%', y: '14%', w: '38%', h: '72%' }
             ],
             GH: [
-                { key: 'guesthouse', label: 'Lounge & Gelbe Bar', x: '8%', y: '16%', w: '46%', h: '68%' },
-                { key: 'room2', label: 'Zi. 2 Schmiedeeisen-Bett', x: '58%', y: '16%', w: '34%', h: '68%' }
+                { key: 'guesthouse', label: 'Lounge & Gelbe Bar', x: '6%', y: '16%', w: '46%', h: '68%' },
+                { key: 'room2', label: 'Zi. 2 Gästehaus', x: '56%', y: '16%', w: '38%', h: '68%' }
             ]
         };
 
         function switchRadarTab(floorCode) {
-            activeRadarFloor = floorCode;
             ['OUT', 'EG', 'OG', 'GH'].forEach(code => {
                 const btn = document.getElementById(`rtab-${code}`);
                 if (btn) {
@@ -816,37 +1123,30 @@
 
             const container = document.getElementById('radar-map-container');
             container.innerHTML = '';
-
             (radarLayouts[floorCode] || []).forEach(box => {
                 const isActive = currentNodeKey === box.key;
-                const div = document.createElement('button');
-                div.className = `map-node absolute rounded-xl border border-white/20 p-2 text-[11px] leading-tight flex flex-col items-center justify-center text-center ${isActive ? 'active' : 'bg-white/5 text-stone-300 hover:bg-white/15'}`;
-                div.style.left = box.x;
-                div.style.top = box.y;
-                div.style.width = box.w;
-                div.style.height = box.h;
-                div.innerHTML = `<span>${box.label}</span>`;
-                div.onclick = () => goToNode(box.key);
-                container.appendChild(div);
+                const btn = document.createElement('button');
+                btn.className = `map-node absolute rounded-xl border border-white/20 p-1.5 text-[10px] leading-tight flex items-center justify-center text-center ${isActive ? 'active' : 'bg-white/5 text-stone-300 hover:bg-white/15'}`;
+                btn.style.left = box.x; btn.style.top = box.y; btn.style.width = box.w; btn.style.height = box.h;
+                btn.textContent = box.label;
+                btn.onclick = () => goToNode(box.key);
+                container.appendChild(btn);
             });
         }
 
         function updateHeaderFloorButtons(floorCode) {
-            document.querySelectorAll('.floor-btn').forEach(b => {
-                b.className = 'floor-btn px-4 py-1.5 rounded-full text-xs tracking-widest uppercase transition text-stone-300 hover:text-white';
+            ['OUT', 'EG', 'OG', 'GH'].forEach(c => {
+                const b = document.getElementById(`btn-floor-${c}`);
+                if (b) {
+                    b.className = c === floorCode
+                        ? 'floor-btn px-3.5 py-1.5 rounded-full text-[11px] tracking-widest uppercase transition bg-gold-300 text-stone-950 font-semibold'
+                        : 'floor-btn px-3.5 py-1.5 rounded-full text-[11px] tracking-widest uppercase transition text-stone-300 hover:text-white';
+                }
             });
-            const activeBtn = document.getElementById(`btn-floor-${floorCode}`);
-            if (activeBtn) {
-                activeBtn.className = 'floor-btn px-4 py-1.5 rounded-full text-xs tracking-widest uppercase transition bg-gold-300 text-stone-950 font-semibold';
-            }
-        }
-
-        function filterFloor(type) {
-            if (type === 'ALL') openFullFloorplanModal();
         }
 
         // ============================================================================
-        // 4. BEDROOM CHECK-IN MODALS & DRAWER SYNC
+        // 5. BEDROOMS, CONCIERGE TABS & MARCO METZ CONTACT LOGIC
         // ============================================================================
         function saveBedOccupant(roomId, bedIndex, val) {
             if (!bedAssignments[roomId]) bedAssignments[roomId] = [];
@@ -859,9 +1159,6 @@
         function openBedroomModal(nodeKey) {
             const node = fincaNodes[nodeKey];
             if (!node || !node.isBedroom) return;
-
-            const modal = document.getElementById('bedroom-modal');
-            const body = document.getElementById('bedroom-modal-body');
             const occupants = bedAssignments[node.roomId] || [];
 
             let bedsInputs = '';
@@ -869,35 +1166,23 @@
                 bedsInputs += `
                     <div class="flex items-center gap-3 bg-white/5 p-3 rounded-2xl border border-white/10">
                         <span class="text-xs uppercase tracking-wider text-gold-300 font-semibold w-20"><i class="fa-solid fa-bed mr-1.5"></i>Bett ${i + 1}</span>
-                        <input type="text" value="${occupants[i] || ''}" placeholder="Deinen Namen eintragen..." 
+                        <input type="text" value="${occupants[i] || ''}" placeholder="Name eintragen..." 
                                oninput="saveBedOccupant(${node.roomId}, ${i}, this.value)"
                                class="flex-grow bg-transparent text-white text-sm focus:outline-none border-b border-white/20 focus:border-gold-300 pb-1">
                     </div>
                 `;
             }
 
-            let photosGrid = '';
-            node.images.forEach(img => {
-                photosGrid += `<img src="${img}" onerror="this.src='${fallbackImage}'" class="w-full h-40 object-cover rounded-2xl border border-white/10">`;
-            });
+            const photosGrid = node.images.map(img => `<img src="${img}" onerror="this.src='${fallbackImage}'" class="w-full h-40 object-cover rounded-2xl border border-white/10">`).join('');
 
-            body.innerHTML = `
+            document.getElementById('bedroom-modal-body').innerHTML = `
                 <span class="text-[10px] uppercase tracking-[0.25em] text-gold-300 font-semibold">${node.zoneLabel}</span>
                 <h3 class="font-serif text-3xl text-white mt-1">${node.title}</h3>
                 <p class="text-sm text-stone-300 mt-2">${node.desc}</p>
-                
-                <div class="mt-6 space-y-2.5">
-                    <h4 class="text-xs uppercase tracking-widest text-stone-400 font-semibold">Betten-Reservierung (Automatisch gespeichert)</h4>
-                    ${bedsInputs}
-                </div>
-
-                <div class="mt-6">
-                    <h4 class="text-xs uppercase tracking-widest text-stone-400 font-semibold mb-3">Ansichten dieses Zimmers</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">${photosGrid}</div>
-                </div>
+                <div class="mt-5 space-y-2">${bedsInputs}</div>
+                <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">${photosGrid}</div>
             `;
-
-            modal.classList.remove('hidden');
+            document.getElementById('bedroom-modal').classList.remove('hidden');
         }
 
         function closeBedroomModal() {
@@ -907,23 +1192,15 @@
         function openFullFloorplanModal() {
             const grid = document.getElementById('all-rooms-grid');
             grid.innerHTML = '';
-
-            const bedroomKeys = ['room1', 'room2', 'room3', 'room4', 'room5'];
-            bedroomKeys.forEach(key => {
+            ['room1', 'room2', 'room3', 'room4', 'room5'].forEach(key => {
                 const node = fincaNodes[key];
-                const occupants = bedAssignments[node.roomId] || [];
-
-                let inputsHtml = '';
+                const occ = bedAssignments[node.roomId] || [];
+                let inputs = '';
                 for (let i = 0; i < node.beds; i++) {
-                    inputsHtml += `
-                        <input type="text" value="${occupants[i] || ''}" placeholder="Bett ${i + 1}: Frei – Name eintragen"
-                               oninput="saveBedOccupant(${node.roomId}, ${i}, this.value)"
-                               class="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/15 text-xs text-white focus:border-gold-300 focus:outline-none">
-                    `;
+                    inputs += `<input type="text" value="${occ[i] || ''}" placeholder="Bett ${i + 1}: Name..." oninput="saveBedOccupant(${node.roomId}, ${i}, this.value)" class="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/15 text-xs text-white focus:border-gold-300 focus:outline-none">`;
                 }
-
                 grid.innerHTML += `
-                    <div class="luxury-glass-light rounded-2xl overflow-hidden flex flex-col justify-between p-4 border border-white/10">
+                    <div class="luxury-glass-light rounded-2xl p-4 border border-white/10 flex flex-col justify-between">
                         <div>
                             <div class="h-36 rounded-xl overflow-hidden relative mb-3">
                                 <img src="${node.images[0]}" onerror="this.src='${fallbackImage}'" class="w-full h-full object-cover">
@@ -931,7 +1208,7 @@
                             </div>
                             <h4 class="font-serif text-xl text-white">${node.title}</h4>
                             <p class="text-xs text-stone-300 mt-1 mb-3">${node.desc}</p>
-                            <div class="space-y-2 mb-4">${inputsHtml}</div>
+                            <div class="space-y-2 mb-4">${inputs}</div>
                         </div>
                         <button onclick="closeFullFloorplanModal(); goToNode('${node.id}');" class="w-full py-2 rounded-xl bg-gold-300 text-stone-950 font-bold text-xs uppercase tracking-wider">
                             In 3D-Raum springen
@@ -939,7 +1216,6 @@
                     </div>
                 `;
             });
-
             document.getElementById('overview-modal').classList.remove('hidden');
         }
 
@@ -955,11 +1231,7 @@
                 const occ = bedAssignments[node.roomId] || [];
                 let inputs = '';
                 for (let i = 0; i < node.beds; i++) {
-                    inputs += `
-                        <input type="text" value="${occ[i] || ''}" placeholder="Bett ${i+1}: Name..."
-                               oninput="saveBedOccupant(${node.roomId}, ${i}, this.value)"
-                               class="w-full px-3 py-1.5 rounded-lg bg-stone-950/60 border border-white/15 text-xs text-white focus:border-gold-300 focus:outline-none mt-1.5">
-                    `;
+                    inputs += `<input type="text" value="${occ[i] || ''}" placeholder="Bett ${i+1}: Name..." oninput="saveBedOccupant(${node.roomId}, ${i}, this.value)" class="w-full px-3 py-1.5 rounded-lg bg-stone-950/60 border border-white/15 text-xs text-white focus:border-gold-300 focus:outline-none mt-1.5">`;
                 }
                 container.innerHTML += `
                     <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
@@ -974,71 +1246,68 @@
             });
         }
 
-        // ============================================================================
-        // 5. CONCIERGE DRAWER: SCHEDULE, FOOD & SHOPPING LIST
-        // ============================================================================
         function toggleDrawer(id) {
-            const el = document.getElementById(id);
-            el.classList.toggle('translate-x-full');
+            document.getElementById(id).classList.toggle('translate-x-full');
         }
 
         function switchConciergeTab(tabId) {
             document.querySelectorAll('.concierge-section').forEach(s => s.classList.add('hidden'));
             document.getElementById(tabId).classList.remove('hidden');
 
-            const map = { 'tab-beds': 'ctab-beds', 'tab-schedule': 'ctab-schedule', 'tab-food': 'ctab-food', 'tab-shopping': 'ctab-shopping' };
-            Object.values(map).forEach(btnId => {
-                document.getElementById(btnId).className = 'py-2 rounded-xl text-stone-300 hover:bg-white/5';
+            const map = {
+                'tab-beds': 'ctab-beds',
+                'tab-schedule': 'ctab-schedule',
+                'tab-food': 'ctab-food',
+                'tab-shopping': 'ctab-shopping',
+                'tab-map': 'ctab-map',
+                'tab-contact': 'ctab-contact'
+            };
+            Object.entries(map).forEach(([secId, btnId]) => {
+                const btn = document.getElementById(btnId);
+                btn.className = secId === tabId
+                    ? 'py-2 px-1 rounded-xl bg-gold-300 text-stone-950 font-bold truncate'
+                    : 'py-2 px-1 rounded-xl text-stone-300 hover:bg-white/5 truncate';
             });
-            document.getElementById(map[tabId]).className = 'py-2 rounded-xl bg-gold-300 text-stone-950 font-bold';
         }
 
-        // 8-Day Schedule (31.10. – 07.11.2026)
+        // Schedule
         const defaultSchedule = [
-            { day: 'Sa, 31.10.2026', plan: 'Anreise, Check-in auf der Finca Bosco, Zimmerverteilung & Tapas-Abend' },
-            { day: 'So, 01.11.2026', plan: 'Pool-Session, Großeinkauf in Sant Llorenç & Willkommens-BBQ an der Pergola' },
-            { day: 'Mo, 02.11.2026', plan: 'Strand-Ausflug an die Ostküste (Cala Millor / Cala Agulla)' },
-            { day: 'Di, 03.11.2026', plan: 'Tagesausflug nach Palma de Mallorca (Altstadt & Kathedrale)' },
-            { day: 'Mi, 04.11.2026', plan: 'Entspannter Finca-Tag, Musik & Klavierabend im Salon' },
-            { day: 'Do, 05.11.2026', plan: 'Küstenwanderung oder Marktbesuch & gemeinsames Kochen' },
-            { day: 'Fr, 06.11.2026', plan: 'Großes Finale: Sunset-Drinks & Abschluss-BBQ am Pool' },
-            { day: 'Sa, 07.11.2026', plan: 'Gemeinsames Frühstück, Check-out & Abreise' }
+            { day: 'Sa, 31.10.2026', plan: 'Anreise, Check-in auf der Finca Bosco, Zimmer beziehen & Tapas' },
+            { day: 'So, 01.11.2026', plan: 'Pool-Tag, Großeinkauf (Mercadona/Eroski) & Willkommens-BBQ' },
+            { day: 'Mo, 02.11.2026', plan: 'Strand-Ausflug an die Ostküste (Cala Millor / Sa Coma)' },
+            { day: 'Di, 03.11.2026', plan: 'Ausflug nach Palma de Mallorca (Altstadt & Kathedrale)' },
+            { day: 'Mi, 04.11.2026', plan: 'Finca-Relax-Tag, Pool & Klavierabend im Salon' },
+            { day: 'Do, 05.11.2026', plan: 'Marktbesuch & gemeinsames Kochen in der Landhausküche' },
+            { day: 'Fr, 06.11.2026', plan: 'Sunset-Drinks & großes Abschluss-Grillen an der Pergola' },
+            { day: 'Sa, 07.11.2026', plan: 'Frühstück, Check-out & Rückfahrt zum Flughafen PMI' }
         ];
         let scheduleData = JSON.parse(localStorage.getItem('finca_schedule_2026')) || defaultSchedule;
 
         function renderSchedule() {
-            const box = document.getElementById('schedule-container');
-            box.innerHTML = '';
-            scheduleData.forEach((item, idx) => {
-                box.innerHTML += `
-                    <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
-                        <span class="text-xs font-bold text-gold-300 block mb-1">${item.day}</span>
-                        <input type="text" value="${item.plan}" oninput="updateSchedule(${idx}, this.value)"
-                               class="w-full bg-transparent text-xs text-stone-200 focus:outline-none border-b border-transparent focus:border-gold-300 pb-1">
-                    </div>
-                `;
-            });
+            document.getElementById('schedule-container').innerHTML = scheduleData.map((item, idx) => `
+                <div class="p-3 rounded-2xl bg-white/5 border border-white/10">
+                    <span class="text-xs font-bold text-gold-300 block mb-1">${item.day}</span>
+                    <input type="text" value="${item.plan}" oninput="updateSchedule(${idx}, this.value)" class="w-full bg-transparent text-xs text-stone-200 focus:outline-none border-b border-transparent focus:border-gold-300 pb-1">
+                </div>
+            `).join('');
         }
-
         function updateSchedule(idx, val) {
             scheduleData[idx].plan = val;
             localStorage.setItem('finca_schedule_2026', JSON.stringify(scheduleData));
         }
 
-        // Meal Plan & Wishes
+        // Meals & Wishes
         const defaultMeals = [
-            { day: 'Sa, 31.10.', text: 'Abends: Anreise-Tapas, Oliven & Wein auf der Veranda' },
-            { day: 'So, 01.11.', text: 'Frühstück am Pool • Abends: Großes BBQ an der Schilfrohr-Pergola' },
+            { day: 'Sa, 31.10.', text: 'Abends: Anreise-Tapas & Wein auf der Veranda' },
+            { day: 'So, 01.11.', text: 'Frühstück • Abends: Großes BBQ an der Pergola' },
             { day: 'Mo, 02.11.', text: 'Frühstück • Abends: Chili sin carne aus der Landhausküche' },
-            { day: 'Di, 03.11.', text: 'Frühstück • Abends: Auswärts essen in Palma' },
+            { day: 'Di, 03.11.', text: 'Frühstück • Abends: Tapas in Palma' },
             { day: 'Mi, 04.11.', text: 'Frühstück • Abends: Pasta-Abend & Drinks an der gelben Bar' },
-            { day: 'Do, 05.11.', text: 'Frühstück • Abends: Paella-Abend am langen Holztisch' },
-            { day: 'Fr, 06.11.', text: 'Frühstück • Abends: Reste-Grillen & Abschieds-Dinner' }
+            { day: 'Do, 05.11.', text: 'Frühstück • Abends: Paella am langen Holztisch' },
+            { day: 'Fr, 06.11.', text: 'Frühstück • Abends: Abschieds-BBQ am Pool' }
         ];
-
         function renderMeals() {
-            const box = document.getElementById('meal-plan-container');
-            box.innerHTML = defaultMeals.map(m => `
+            document.getElementById('meal-plan-container').innerHTML = defaultMeals.map(m => `
                 <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex justify-between gap-2">
                     <strong class="text-gold-300 w-24 flex-shrink-0">${m.day}</strong>
                     <span class="text-stone-300 text-right">${m.text}</span>
@@ -1056,25 +1325,21 @@
             document.getElementById('wish-item').value = '';
             renderWishes();
         }
-
         function renderWishes() {
-            const box = document.getElementById('wishes-list');
-            box.innerHTML = wishes.map(w => `
+            document.getElementById('wishes-list').innerHTML = wishes.map(w => `
                 <div class="p-3 rounded-xl bg-white/5 border border-white/10 text-xs">
-                    <span class="text-gold-300 font-bold">${w.name}:</span>
-                    <span class="text-stone-200 ml-1">${w.text}</span>
+                    <span class="text-gold-300 font-bold">${w.name}:</span> <span class="text-stone-200">${w.text}</span>
                 </div>
             `).join('');
         }
 
-        // Shopping List
+        // Shopping
         let shoppingList = JSON.parse(localStorage.getItem('finca_shop_2026')) || [
             { id: 1, text: 'Kaffeebohnen & Hafermilch', done: false },
-            { id: 2, text: 'Grillkohle für den BBQ-Grill', done: false },
-            { id: 3, text: 'Frisches Baguette, Olivenöl & Meersalz', done: false },
-            { id: 4, text: 'Wasser (Still & Medium), Wein & Bier', done: false }
+            { id: 2, text: 'Grillkohle & Anzünder für den BBQ-Grill', done: false },
+            { id: 3, text: 'Frisches Brot, Olivenöl & Meersalz', done: false },
+            { id: 4, text: 'Wasser, Wein, Bier & Softdrinks', done: false }
         ];
-
         function addShoppingItem(e) {
             e.preventDefault();
             const input = document.getElementById('shop-item-input');
@@ -1083,22 +1348,18 @@
             input.value = '';
             renderShopping();
         }
-
         function toggleShopItem(id) {
             shoppingList = shoppingList.map(i => i.id === id ? { ...i, done: !i.done } : i);
             localStorage.setItem('finca_shop_2026', JSON.stringify(shoppingList));
             renderShopping();
         }
-
         function removeShopItem(id) {
             shoppingList = shoppingList.filter(i => i.id !== id);
             localStorage.setItem('finca_shop_2026', JSON.stringify(shoppingList));
             renderShopping();
         }
-
         function renderShopping() {
-            const ul = document.getElementById('shopping-list-ul');
-            ul.innerHTML = shoppingList.map(item => `
+            document.getElementById('shopping-list-ul').innerHTML = shoppingList.map(item => `
                 <li class="py-3 flex items-center justify-between">
                     <label class="flex items-center gap-3 cursor-pointer">
                         <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleShopItem(${item.id})" class="accent-gold-300 w-4 h-4">
@@ -1109,18 +1370,84 @@
             `).join('');
         }
 
-        // Live Weather via Open-Meteo for Sant Llorenç des Cardassar
+        // Marco Metz Contact Logic
+        let marcoContact = JSON.parse(localStorage.getItem('finca_marco_contact')) || {
+            phone: '+491700000000',
+            email: 'marco.metz@example.com'
+        };
+        let marcoMessages = JSON.parse(localStorage.getItem('finca_marco_msgs')) || [];
+
+        function initMarcoContact() {
+            document.getElementById('marco-phone-input').value = marcoContact.phone;
+            document.getElementById('marco-email-input').value = marcoContact.email;
+            applyMarcoLinks();
+            renderMarcoMessages();
+        }
+
+        function updateMarcoContact() {
+            marcoContact.phone = document.getElementById('marco-phone-input').value.trim() || '+491700000000';
+            marcoContact.email = document.getElementById('marco-email-input').value.trim() || 'marco.metz@example.com';
+            localStorage.setItem('finca_marco_contact', JSON.stringify(marcoContact));
+            applyMarcoLinks();
+        }
+
+        function applyMarcoLinks() {
+            const cleanPhone = marcoContact.phone.replace(/[^0-9+]/g, '');
+            const waNumber = cleanPhone.replace(/^\+/, '');
+            document.getElementById('marco-whatsapp-link').href = `https://wa.me/${waNumber}?text=Hi%20Marco%2C%20Frage%20zur%20Finca%20Bosco%20auf%20Mallorca!`;
+            document.getElementById('marco-call-link').href = `tel:${cleanPhone}`;
+            document.getElementById('marco-mail-link').href = `mailto:${marcoContact.email}?subject=Finca%20Bosco%20Mallorca%202026`;
+        }
+
+        function sendNoteToMarco(e) {
+            e.preventDefault();
+            const sender = document.getElementById('msg-sender').value;
+            const flight = document.getElementById('msg-flight').value;
+            const body = document.getElementById('msg-body').value;
+
+            const entry = { id: Date.now(), sender, flight, body };
+            marcoMessages.unshift(entry);
+            localStorage.setItem('finca_marco_msgs', JSON.stringify(marcoMessages));
+            renderMarcoMessages();
+
+            const waPhone = marcoContact.phone.replace(/[^0-9]/g, '');
+            const waText = encodeURIComponent(`Hi Marco! Hier ist ${sender}${flight ? ' (' + flight + ')' : ''}: ${body}`);
+            window.open(`https://wa.me/${waPhone}?text=${waText}`, '_blank');
+
+            document.getElementById('msg-body').value = '';
+        }
+
+        function renderMarcoMessages() {
+            const list = document.getElementById('marco-messages-list');
+            list.innerHTML = marcoMessages.map(m => `
+                <div class="p-3 rounded-xl bg-stone-950/60 border border-white/10 text-xs">
+                    <div class="flex justify-between text-gold-300 font-bold">
+                        <span>${m.sender}</span>
+                        <span>${m.flight || ''}</span>
+                    </div>
+                    <p class="text-stone-300 mt-1">${m.body}</p>
+                </div>
+            `).join('');
+        }
+
+        function copyFincaAddress() {
+            navigator.clipboard.writeText('Finca Bosco, Ma-4021, 07540 Sant Llorenç des Cardassar, Mallorca');
+            const btn = document.getElementById('copy-addr-btn');
+            btn.innerHTML = '<i class="fa-solid fa-check mr-1"></i> Kopiert!';
+            setTimeout(() => { btn.innerHTML = '<i class="fa-regular fa-copy mr-1"></i> Kopieren'; }, 2000);
+        }
+
+        // Live Weather
         async function loadWeather() {
             try {
                 const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=39.6015&longitude=3.2925&current=temperature_2m');
                 const data = await res.json();
-                document.getElementById('weather-display').textContent = `${data.current.temperature_2m}°C • Sant Llorenç`;
+                document.getElementById('weather-display').textContent = `${data.current.temperature_2m}°C Sant Llorenç`;
             } catch (e) {
-                document.getElementById('weather-display').textContent = '22°C • Sant Llorenç';
+                document.getElementById('weather-display').textContent = '22°C Sant Llorenç';
             }
         }
 
-        // Initialize Experience
         window.addEventListener('DOMContentLoaded', () => {
             goToNode('veranda');
             renderDrawerBeds();
@@ -1128,6 +1455,7 @@
             renderMeals();
             renderWishes();
             renderShopping();
+            initMarcoContact();
             loadWeather();
         });
     </script>
